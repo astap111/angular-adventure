@@ -42,7 +42,7 @@ public class PersistenceConfiguration {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(Database.POSTGRESQL);
         vendorAdapter.setShowSql(true);
-        vendorAdapter.setGenerateDdl(true);
+//        vendorAdapter.setGenerateDdl(true);
 
         factory.setDataSource(dataSource());
         factory.setJpaVendorAdapter(vendorAdapter);
