@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 public class PersistenceConfiguration {
     private static final Logger LOGGER = LogManager.getLogger(PersistenceConfiguration.class);
 
-    @Bean
+    @Bean(destroyMethod = "")
     public DataSource dataSource() {
         try {
             Object ds = new InitialContext().lookup("java:/comp/env/jdbc/warehouse");
@@ -42,7 +42,7 @@ public class PersistenceConfiguration {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(Database.POSTGRESQL);
         vendorAdapter.setShowSql(true);
-//        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setGenerateDdl(true);
 
         factory.setDataSource(dataSource());
         factory.setJpaVendorAdapter(vendorAdapter);
