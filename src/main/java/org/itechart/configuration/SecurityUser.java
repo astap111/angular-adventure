@@ -16,11 +16,19 @@ public class SecurityUser extends User implements UserDetails {
 
     public SecurityUser(User user) {
         if (user != null) {
-            this.setId(user.getId());
-            this.setName(user.getName());
-            this.setPassword(user.getPassword());
-            this.setRoles(user.getRoles());
+            setId(user.getId());
+            setLogin(user.getLogin());
+            setPassword(user.getPassword());
+            setRoles(user.getRoles());
+            setBirthDate(user.getBirthDate());
+            setFirstName(user.getFirstName());
+            setLastName(user.getLastName());
+            setMiddleName(user.getMiddleName());
+            setEmail(user.getEmail());
         }
+    }
+
+    public SecurityUser() {
     }
 
     @Override
@@ -44,7 +52,7 @@ public class SecurityUser extends User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getName();
+        return super.getLogin();
     }
 
     @Override

@@ -15,11 +15,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String name)
+    public UserDetails loadUserByUsername(String login)
             throws UsernameNotFoundException {
-        User user = userService.findByName(name);
-        if(user == null){
-            throw new UsernameNotFoundException("UserName "+name+" not found");
+        User user = userService.findByLogin(login);
+        if (user == null) {
+            throw new UsernameNotFoundException("Login " + login + " not found");
         }
         return new SecurityUser(user);
     }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "api/user")
 @Secured(value = "ROLE_ADMIN")
 public class UserController {
     private static final Logger LOGGER = LogManager.getLogger(UserController.class);
