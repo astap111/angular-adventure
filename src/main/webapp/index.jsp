@@ -16,14 +16,12 @@
 <body ng-app="userApp">
 <div class="container" role="main">
 
-    <ng-view>
-        This is the warehouse app!
+    <div ui-view>
+        <a ui-sref="users">Users</a>
+    </div>
 
-        <a href ui-sref="users">Show users list</a>
-    </ng-view>
 
 </div>
 <script src="js/mainJs.js"></script>
-<script src="js/states.js"></script>
 </body>
 </html>

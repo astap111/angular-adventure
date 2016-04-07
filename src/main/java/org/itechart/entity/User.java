@@ -29,6 +29,9 @@ public class User {
 
     private String email;
 
+    @Embedded
+    private Address address;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Set<Role> roles = new HashSet<>();
@@ -103,5 +106,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

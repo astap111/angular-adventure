@@ -3,7 +3,7 @@
 </div>
 <div class="row">
 
-    <div ng-controller="userCtrl" class="col-md-12">
+    <div class="col-md-12">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -15,7 +15,7 @@
             <tbody>
             <tr ng-repeat="user in users">
                 <td>
-                    {{ user.firstName + ' ' + user.lastName }}
+                    <a ui-sref="userDetails({userId: user.id})">{{ user.firstName + ' ' + user.lastName }}</a>
                 </td>
                 <td>
                     {{ user.login }}
