@@ -21,13 +21,22 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('userDetails', {
             url: "/users/{userId}",
             templateUrl: "partials/userDetails.jsp",
-            controller: function ($scope, $http, $stateParams) {
+            controller: function ($scope, $http, $stateParams, $state) {
                 $http.get("api/user/" + $stateParams.userId)
                     .then(function (response) {
                         $scope.user = response.data;
                     });
+
+                $scope.onFormSubmit = function () {
+                    $http.post("api/user", $scope.user)
+                        .then(
+                        function (response) {
+                            $state.go('users')
+                        }
+                    );
+                }
             }
         });
-
-
 });
+
+

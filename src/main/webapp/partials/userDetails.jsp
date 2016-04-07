@@ -4,7 +4,7 @@
 <div class="row">
 
     <div class="col-md-12">
-        <form novalidate class="form-horizontal" role="form">
+        <form ng-submit="onFormSubmit()" name="userForm" novalidate class="form-horizontal" role="form">
 
             <div class="form-group">
                 <label>Login:</label>
@@ -38,7 +38,7 @@
 
             <div class="form-group">
                 <label>Birth Date:</label>
-                <input type="date" class="form-control" ng-model="user.birthDate">
+                <input type="text" class="form-control" ng-model="user.birthDate">
             </div>
 
             <div class="form-group">
@@ -69,16 +69,8 @@
                 <input type="text" class="form-control" ng-model="user.address.apartment">
             </div>
 
+            <input type="submit" class="btn btn-default" value="Save"/>
         </form>
 
-        <button ng-click="save()" class="btn btn-default">SAVE</button>
-
-        <script>
-            app.controller('', function ($scope) {
-                $scope.save = function () {
-                    alert('inside');
-                };
-            });
-        </script>
     </div>
 </div>

@@ -31,12 +31,12 @@ public class UserController {
         return userService.findOne(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.PUT)
     public void createUser(@RequestBody User user) {
         userService.save(user);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     public void updateUser(@RequestBody User user) {
         userService.update(user);
     }
