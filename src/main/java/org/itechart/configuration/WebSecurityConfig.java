@@ -13,25 +13,23 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
     public void configureGlobal(DataSource dataSource, AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "select username,password, enabled from users where username=?")
+                        "select username, password, enabled from user where username=?")
                 .authoritiesByUsernameQuery(
-                        "select username, authority from authorities where username=?")
-                .withUser("user").password("pass").roles("USER").and()
-                .withUser("admin").password("pass").roles("ADMIN", "USER");
+                        "select username, authority from authorities where username=?");
     }
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user").password("pass").roles("USER").and()
-//                .withUser("admin").password("pass").roles("ADMIN", "USER");
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder registry) throws Exception {
+        registry.userDetailsService(customUserDetailsService);
+    }
 
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
