@@ -29,6 +29,8 @@ var usersController = function ($scope, $http) {
 };
 
 var userDetailsController = function ($scope, $http, $stateParams, $state) {
+    $scope.roles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
+
     $http.get("api/user/" + $stateParams.userId)
         .then(function (response) {
             $scope.user = response.data;
@@ -37,22 +39,24 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
     $scope.onFormSubmit = function () {
         $http.post("api/user", $scope.user)
             .then(
-            function (response) {
-                $state.go('users')
-            }
-        );
+                function (response) {
+                    $state.go('users');
+                }
+            );
     }
 };
 
 var addUserController = function ($scope, $http, $state) {
     $scope.user = {roles: [{roleName: null}]};
-    console.log($scope.user);
+
+    $scope.roles = [{roleName: 'one'}, {roleName: 'two'}, {roleName: 'three'}];
+
     $scope.onFormSubmit = function () {
         $http.put("api/user", $scope.user)
             .then(
-            function (response) {
-                $state.go('users')
-            }
-        );
+                function (response) {
+                    $state.go('users');
+                }
+            );
     }
 };
