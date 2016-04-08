@@ -1,76 +1,99 @@
-<div class="page-header">
-    <h1>User details</h1>
-</div>
+<h1 class="page-header">User Details</h1>
+
 <div class="row">
 
-    <div class="col-md-12">
-        <form ng-submit="onFormSubmit()" name="userForm" novalidate class="form-horizontal" role="form">
-
-            <div class="form-group">
-                <label>Login:</label>
-                <input type="text" class="form-control" ng-model="user.login">
+    <form ng-submit="onFormSubmit()" name="userForm" novalidate class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="login" class="col-sm-2 control-label">Login:</label>
+            <div class="col-sm-9">
+                <input id="login" type="text" class="form-control" ng-model="user.login">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Password:</label>
-                <input type="text" class="form-control" ng-model="user.password">
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password:</label>
+            <div class="col-sm-9">
+                <input id="password" type="text" class="form-control" ng-model="user.password">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Role:</label>
-                <input type="text" class="form-control" ng-model="user.roles[0].roleName">
+        <div class="form-group">
+            <label for="role" class="col-sm-2 control-label">Role:</label>
+            <div class="col-sm-9">
+                <input id="role" type="text" class="form-control" ng-model="user.roles[0].roleName">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>First Name:</label>
-                <input type="text" class="form-control" ng-model="user.firstName">
+        <div class="form-group">
+            <label for="firstName" class="col-sm-2 control-label">First Name:</label>
+            <div class="col-sm-9">
+                <input id="firstName" type="text" class="form-control" ng-model="user.firstName">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Last Name:</label>
-                <input type="text" class="form-control" ng-model="user.lastName">
+        <div class="form-group">
+            <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
+            <div class="col-sm-9">
+                <input id="lastName" type="text" class="form-control" ng-model="user.lastName">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Middle Name:</label>
-                <input type="text" class="form-control" ng-model="user.middleName">
+        <div class="form-group">
+            <label for="middleName" class="col-sm-2 control-label">Middle Name:</label>
+            <div class="col-sm-9">
+                <input id="middleName" type="text" class="form-control" ng-model="user.middleName">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Birth Date:</label>
-                <input type="text" class="form-control" ng-model="user.birthDate">
+        <div class="form-group">
+            <label for="birthdate" class="col-sm-2 control-label">Birth Date:</label>
+            <div class="col-sm-9">
+                <input id="birthdate" type="text" class="form-control" ng-model="user.birthDate">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Email:</label>
-                <input type="text" class="form-control" ng-model="user.email">
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email:</label>
+            <div class="col-sm-9">
+                <input id="email" type="text" class="form-control" ng-model="user.email">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>ADDRESS:</label>
+        <div class="form-group">
+            <label class="col-sm-1 col-sm-offset-2">ADDRESS:</label>
+        </div>
+
+
+        <div class="form-group">
+            <label for="city" class="col-sm-2 control-label">City:</label>
+            <div class="col-sm-9">
+                <input id="city" type="text" class="form-control" ng-model="user.address.city">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>City:</label>
-                <input type="text" class="form-control" ng-model="user.address.city">
+        <div class="form-group">
+            <label for="street" class="col-sm-2 control-label">Street:</label>
+            <div class="col-sm-9">
+                <input id="street" type="text" class="form-control" ng-model="user.address.street">
             </div>
+        </div>
 
-            <div class="form-group">
-                <label>Street:</label>
-                <input type="text" class="form-control" ng-model="user.address.street">
+        <div class="form-group">
+            <label for="house" class="col-sm-2 control-label">House number:</label>
+            <div class="col-sm-9">
+                <input id="house" type="text" class="form-control" ng-model="user.address.house">
             </div>
-
-            <div class="form-group">
-                <label>House number:</label>
-                <input type="text" class="form-control" ng-model="user.address.house">
+        </div>
+        <div class="form-group">
+            <label for="apart" class="col-sm-2 control-label">Apartment number:</label>
+            <div class="col-sm-9">
+                <input id="apart" type="text" class="form-control" ng-model="user.address.apartment">
             </div>
-            <div class="form-group">
-                <label>Apartment number:</label>
-                <input type="text" class="form-control" ng-model="user.address.apartment">
-            </div>
+        </div>
 
-            <input type="submit" class="btn btn-default" value="Save"/>
-        </form>
+        <div class="form-group">
+            <input type="submit" class="btn btn-default col-sm-1 col-sm-offset-5" value="Save"/>
+        </div>
+    </form>
 
-    </div>
 </div>
