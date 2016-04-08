@@ -25,6 +25,9 @@ var usersController = function ($scope, $http) {
     $http.get("api/user")
         .then(function (response) {
             $scope.users = response.data;
+            $scope.users.forEach(function (userItem) {
+                wrapUserDate(userItem);
+            });
         });
 };
 
@@ -34,6 +37,8 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
     $http.get("api/user/" + $stateParams.userId)
         .then(function (response) {
             $scope.user = response.data;
+            // $scope.user.birthDate = new Date($scope.user.birthDate);
+            wrapUserDate($scope.user);
         });
 
     $scope.onFormSubmit = function () {
@@ -47,8 +52,7 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
 };
 
 var addUserController = function ($scope, $http, $state) {
-    $scope.user = {roles: [{roleName: null}]};
-
+    //$scope.user = {roles: [{roleName: null}]};
     $scope.roles = [{roleName: 'one'}, {roleName: 'two'}, {roleName: 'three'}];
 
     $scope.onFormSubmit = function () {
@@ -60,3 +64,8 @@ var addUserController = function ($scope, $http, $state) {
             );
     }
 };
+
+
+function wrapUserDate(user) {
+    user.birthDate = new Date(user.birthDate);
+}

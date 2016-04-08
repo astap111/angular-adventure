@@ -20,7 +20,9 @@
         <div class="form-group">
             <label for="role" class="col-sm-2 control-label">Role:</label>
             <div class="col-sm-9">
-                <select id="role" ng-model="user.roles" ng-options="role.roleName for role in roles track by role.roleName" class="form-control" multiple></select>
+                <select id="role" ng-model="user.roles"
+                        ng-options="role.roleName for role in roles track by role.roleName" class="form-control"
+                        multiple></select>
             </div>
         </div>
 
@@ -48,7 +50,7 @@
         <div class="form-group">
             <label for="birthdate" class="col-sm-2 control-label">Birth Date:</label>
             <div class="col-sm-9">
-                <input id="birthdate" type="text" class="form-control" ng-model="user.birthDate">
+                <input id="birthdate" type="date" class="form-control" ng-model="user.birthDate">
             </div>
         </div>
 
