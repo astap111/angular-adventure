@@ -28,4 +28,22 @@
         </tbody>
     </table>
 </div>
+<nav>
+    <ul class="pagination">
+        <li>
+            <a ng-click="prevPage()" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li ng-repeat=""><a href="#">1</a></li>
+
+        <li>
+            <a ng-click="nextPage()" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
 <button ui-sref="addUser" class="btn btn-default">Add user</button>

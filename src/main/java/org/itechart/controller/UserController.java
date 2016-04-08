@@ -5,15 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.itechart.entity.User;
 import org.itechart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping(value = "api/user")
+@RequestMapping(value = "api/users")
 @Secured(value = "ROLE_ADMIN")
 public class UserController {
     private static final Logger LOGGER = LogManager.getLogger(UserController.class);
@@ -22,8 +21,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> getUsers() {
-        return userService.findAll();
+    public Page<User> getUsers(@RequestParam Integer page, @RequestParam Integer pageSize) {
+        return userService.findAll(page, pageSize);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

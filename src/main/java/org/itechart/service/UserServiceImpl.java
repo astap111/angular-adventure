@@ -3,10 +3,11 @@ package org.itechart.service;
 import org.itechart.entity.User;
 import org.itechart.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -37,8 +38,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAllExceptSuperAdmin();
+    public Page<User> findAll(int page, int pageSize) {
+        return userRepository.findAll(new Pageable() {
+            @Override
+            public int getPageNumber() {
+                return page;
+            }
+
+            @Override
+            public int getPageSize() {
+                return pageSize;
+            }
+
+            @Override
+            public int getOffset() {
+                return page * pageSize;
+            }
+
+            @Override
+            public Sort getSort() {
+                return null;
+            }
+        });
     }
 
     @Override

@@ -1,8 +1,7 @@
 package org.itechart.service;
 
 import org.itechart.entity.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface UserService {
     void update(User user);
@@ -11,7 +10,7 @@ public interface UserService {
 
     User findOne(Long id);
 
-    List<User> findAll();
+    Page<User> findAll(int page, int pageSize);
 
     User findByLogin(String login);
 }
