@@ -21,10 +21,11 @@
                     {{ user.login }}
                 </td>
                 <td>
-                    {{ user.roles[0].roleName }}
+                    {{ user.role.roleName }}
                 </td>
             </tbody>
         </table>
+        <button ui-sref="addUser" class="btn btn-default">Add user</button>
     </div>
 
 </div>

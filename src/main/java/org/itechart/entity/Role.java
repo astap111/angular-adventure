@@ -1,14 +1,10 @@
 package org.itechart.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "ROLES")
-public class Role implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_seq")
     @SequenceGenerator(name = "role_id_seq", sequenceName = "role_id_seq")
@@ -16,7 +12,6 @@ public class Role implements Serializable {
 
     @Column(name = "role_name", nullable = false)
     private String roleName;
-
 
     public Long getId() {
         return id;

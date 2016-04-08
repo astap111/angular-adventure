@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label>Role:</label>
-                <input type="text" class="form-control" ng-model="user.roles[0].roleName">
+                <input type="text" class="form-control" ng-model="user.role.roleName">
             </div>
 
             <div class="form-group">

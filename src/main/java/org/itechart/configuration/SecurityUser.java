@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 public class SecurityUser extends User implements UserDetails {
 
@@ -19,7 +18,7 @@ public class SecurityUser extends User implements UserDetails {
             setId(user.getId());
             setLogin(user.getLogin());
             setPassword(user.getPassword());
-            setRoles(user.getRoles());
+            setRole(user.getRole());
             setBirthDate(user.getBirthDate());
             setFirstName(user.getFirstName());
             setLastName(user.getLastName());
@@ -34,13 +33,11 @@ public class SecurityUser extends User implements UserDetails {
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        Set<Role> userRoles = this.getRoles();
+        Role userRole = this.getRole();
 
-        if (userRoles != null) {
-            for (Role role : userRoles) {
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRoleName());
-                authorities.add(authority);
-            }
+        if (userRole != null) {
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.getRoleName());
+            authorities.add(authority);
         }
         return authorities;
     }
