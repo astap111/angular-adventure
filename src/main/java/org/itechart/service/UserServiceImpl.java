@@ -1,8 +1,6 @@
 package org.itechart.service;
 
-import org.itechart.entity.Role;
 import org.itechart.entity.User;
-import org.itechart.repository.RoleRepository;
 import org.itechart.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +15,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
     @Override
     public void update(User user) {
         if (user.getId() == null) {
@@ -33,11 +28,6 @@ public class UserServiceImpl implements UserService {
         if (user.getId() != null) {
             throw new IllegalArgumentException("Failed to save user with not null id");
         }
-        Role role = null;
-        if (user.getRole() != null && user.getRole().getRoleName() != null) {
-            role = roleRepository.findByRoleName(user.getRole().getRoleName());
-        }
-        user.setRole(role);
         userRepository.save(user);
     }
 

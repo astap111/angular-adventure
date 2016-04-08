@@ -1,4 +1,4 @@
-package org.itechart.configuration;
+package org.itechart.configuration.security;
 
 import org.itechart.entity.User;
 import org.itechart.service.UserService;

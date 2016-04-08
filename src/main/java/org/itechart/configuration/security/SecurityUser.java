@@ -1,4 +1,4 @@
-package org.itechart.configuration;
+package org.itechart.configuration.security;
 
 import org.itechart.entity.Role;
 import org.itechart.entity.User;
@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class SecurityUser extends User implements UserDetails {
 
@@ -18,7 +19,7 @@ public class SecurityUser extends User implements UserDetails {
             setId(user.getId());
             setLogin(user.getLogin());
             setPassword(user.getPassword());
-            setRole(user.getRole());
+            setRoles(user.getRoles());
             setBirthDate(user.getBirthDate());
             setFirstName(user.getFirstName());
             setLastName(user.getLastName());
@@ -33,11 +34,13 @@ public class SecurityUser extends User implements UserDetails {
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        Role userRole = this.getRole();
+        List<Role> userRoles = this.getRoles();
 
-        if (userRole != null) {
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.getRoleName());
-            authorities.add(authority);
+        if (userRoles != null) {
+            for (Role role : userRoles) {
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRoleName());
+                authorities.add(authority);
+            }
         }
         return authorities;
     }

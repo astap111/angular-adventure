@@ -1,13 +1,16 @@
-package org.itechart.configuration;
+package org.itechart.configuration.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import javax.sql.DataSource;
 
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -25,12 +28,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registry.userDetailsService(customUserDetailsService);
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .headers().disable()
-//                .authorizeRequests()
-//                .anyRequest().authenticated();
-//    }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.
+                csrf().disable()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login.html")
+                .permitAll();
+    }
+
 }

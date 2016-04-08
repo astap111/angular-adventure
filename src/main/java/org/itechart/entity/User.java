@@ -1,7 +1,9 @@
 package org.itechart.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -32,9 +34,12 @@ public class User {
     @Embedded
     private Address address;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "ROLES",
+            joinColumns = @JoinColumn(name = "USER_ID")
+    )
+    private List<Role> roles = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -100,12 +105,12 @@ public class User {
         this.email = email;
     }
 
-    public Role getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public Address getAddress() {
@@ -116,11 +121,11 @@ public class User {
         this.address = address;
     }
 
-    public Boolean getIsActive() {
+    public Boolean getActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }

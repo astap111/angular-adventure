@@ -4,19 +4,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('users', {
             url: "/users",
-            templateUrl: "partials/users.jsp",
+            templateUrl: "partials/users.html",
             controller: usersController
         })
 
         .state('userDetails', {
             url: "/users/{userId}:{0-9}",
-            templateUrl: "partials/userDetails.jsp",
+            templateUrl: "partials/userDetails.html",
             controller: userDetailsController
         })
 
         .state('addUser', {
             url: "/users/add",
-            templateUrl: "partials/userDetails.jsp",
+            templateUrl: "partials/userDetails.html",
             controller: addUserController
         });
 });
@@ -45,7 +45,8 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
 };
 
 var addUserController = function ($scope, $http, $state) {
-    $scope.user = {id: null};
+    $scope.user = {roles: [{roleName: null}]};
+    console.log($scope.user);
     $scope.onFormSubmit = function () {
         $http.put("api/user", $scope.user)
             .then(
