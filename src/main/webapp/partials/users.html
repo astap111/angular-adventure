@@ -35,7 +35,7 @@
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li ng-repeat="page in pager.pages">
+        <li class="{{ page ==  pageCtx.number ? 'active' : '' }}" ng-repeat="page in pager.pages">
             <a ui-sref="users({page : page})">
                 {{ page + 1 }}
             </a>
@@ -44,6 +44,15 @@
             <a ui-sref="users({page : pageCtx.number + 1, pageSize : pageCtx.size})" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
+        </li>
+    </ul>
+
+    <ul class="pagination pull-right">
+        <li class="{{ pageCtx.size == 5 ? 'active' : '' }}">
+            <a ui-sref="users({page : 0, pageSize : 5})">&nbsp5&nbsp</a>
+        </li>
+        <li class="{{ pageCtx.size == 10 ? 'active' : '' }}">
+            <a ui-sref="users({page : 0, pageSize : 10})">10</a>
         </li>
     </ul>
 </nav>
