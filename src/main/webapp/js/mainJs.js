@@ -37,23 +37,21 @@ var usersController = function ($scope, $http, $stateParams, $state) {
             method: "GET",
             params: {page: self.page, pageSize: self.pageSize}
         }).then(function (response) {
-            $scope.users = response.data.content;
-            response.data.content = null; //todo may be explicit
             $scope.pageCtx = response.data;
-            $scope.users.forEach(function (userItem) {
-                wrapUserDate(userItem);
-            });
+            if ($scope.pageCtx.number )
+
+            $scope.users = response.data.content;
+
+            $scope.pager = {};
+            $scope.pager.pages = [];
+            for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
+                $scope.pager.pages.push(i);
+            }
+
         });
     }
 
-    self.nextPage = function() {
-        $state.go('.', {page: self.page + 1});
-    };
-    self.prevPage = function() {
-        if (self.page > 0) {
-            $state.go('.', {page: self.page - 1});
-        }
-    };
+
 };
 
 var userDetailsController = function ($scope, $http, $stateParams, $state) {
@@ -62,17 +60,16 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
     $http.get("api/users/" + $stateParams.userId)
         .then(function (response) {
             $scope.user = response.data;
-            // $scope.user.birthDate = new Date($scope.user.birthDate);
             wrapUserDate($scope.user);
         });
 
     $scope.onFormSubmit = function () {
         $http.post("api/users", $scope.user)
             .then(
-                function (response) {
-                    $state.go('users');
-                }
-            );
+            function (response) {
+                $state.go('users');
+            }
+        );
     }
 };
 
@@ -82,10 +79,10 @@ var addUserController = function ($scope, $http, $state) {
     $scope.onFormSubmit = function () {
         $http.put("api/users", $scope.user)
             .then(
-                function (response) {
-                    $state.go('users');
-                }
-            );
+            function (response) {
+                $state.go('users');
+            }
+        );
     }
 };
 
