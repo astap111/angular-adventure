@@ -29,6 +29,7 @@ var usersController = function ($scope, $http, $stateParams, $state) {
     var self = this;
     self.page = parseInt($stateParams.page, 10);
     self.pageSize = parseInt($stateParams.pageSize, 10);
+
     updatePage();
 
     function updatePage() {
@@ -38,20 +39,14 @@ var usersController = function ($scope, $http, $stateParams, $state) {
             params: {page: self.page, pageSize: self.pageSize}
         }).then(function (response) {
             $scope.pageCtx = response.data;
-            if ($scope.pageCtx.number )
-
             $scope.users = response.data.content;
-
             $scope.pager = {};
             $scope.pager.pages = [];
             for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
                 $scope.pager.pages.push(i);
             }
-
         });
     }
-
-
 };
 
 var userDetailsController = function ($scope, $http, $stateParams, $state) {

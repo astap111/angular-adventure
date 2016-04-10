@@ -40,8 +40,8 @@
                 {{ page + 1 }}
             </a>
         </li>
-        <li class="{{ pageCtx.number < pageCtx.totalPages ? 'enabled' : 'disabled' }}">
-            <a ui-sref="users({page : pageCtx.number + 1 , pageSize : pageCtx.size})" aria-label="Next">
+        <li class="{{ pageCtx.number + 1 < pageCtx.totalPages ? 'enabled' : 'disabled' }}">
+            <a ui-sref="users({page : pageCtx.number + 1, pageSize : pageCtx.size})" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
