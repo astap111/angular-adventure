@@ -13,7 +13,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
 
         .state('userDetails', {
-            url: "/users/{userId}:{0-9}",
+            url: "/users/{userId:int}",
             templateUrl: "partials/userDetails.html",
             controller: userDetailsController
         })
