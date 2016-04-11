@@ -38,9 +38,9 @@
             <div class="col-sm-6">
                 <input id="firstName" name="firstName" type="text" class="form-control" ng-model="user.firstName"
                        required>
-                <div ng-show="userForm.$submitted || userForm.firstName.$touched" class="col-sm-4">
-                    <label ng-show="userForm.firstName.$error.required" class="text-danger">Enter first name</label>
-                </div>
+            </div>
+            <div ng-show="userForm.$submitted || userForm.firstName.$touched" class="col-sm-4">
+                <label ng-show="userForm.firstName.$error.required" class="text-danger">Enter first name</label>
             </div>
         </div>
 
@@ -48,9 +48,9 @@
             <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
             <div class="col-sm-6">
                 <input id="lastName" name="lastName" type="text" class="form-control" ng-model="user.lastName" required>
-                <div ng-show="userForm.$submitted || userForm.lastName.$touched" class="col-sm-4">
-                    <label ng-show="userForm.lastName.$error.required" class="text-danger">Enter last name</label>
-                </div>
+            </div>
+            <div ng-show="userForm.$submitted || userForm.lastName.$touched" class="col-sm-4">
+                <label ng-show="userForm.lastName.$error.required" class="text-danger">Enter last name</label>
             </div>
         </div>
 
@@ -129,9 +129,5 @@
             <button ui-sref="users" class="btn btn-default col-sm-1">Back</button>
         </div>
     </form>
-
-    <style type="text/css">
-
-    </style>
 
 </div>
