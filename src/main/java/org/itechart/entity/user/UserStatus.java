@@ -1,4 +1,4 @@
-package org.itechart.entity;
+package org.itechart.entity.user;
 
 public enum UserStatus {
     ACTIVE,

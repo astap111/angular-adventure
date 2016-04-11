@@ -1,6 +1,6 @@
 package org.itechart.service;
 
-import org.itechart.entity.User;
+import org.itechart.entity.user.User;
 import org.springframework.data.domain.Page;
 
 public interface UserService {

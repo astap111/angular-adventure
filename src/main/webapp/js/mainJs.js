@@ -50,7 +50,7 @@ var usersController = function ($scope, $http, $stateParams, $state) {
 
 var userDetailsController = function ($scope, $http, $stateParams, $state) {
     $scope.availableRoles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
-    $scope.availableStatuses = ['ACTIVE', 'INCATIVE'];
+    $scope.availableStatuses = ['ACTIVE', 'BLOCKED'];
     $scope.user = {status: 'ACTIVE'};
 
     $http.get("api/users/" + $stateParams.userId)
@@ -71,7 +71,7 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
 
 var addUserController = function ($scope, $http, $state) {
     $scope.availableRoles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
-    $scope.availableStatuses = ['ACTIVE', 'INCATIVE'];
+    $scope.availableStatuses = ['ACTIVE', 'BLOCKED'];
     $scope.user = {status: 'ACTIVE'};
 
     $scope.onFormSubmit = function () {

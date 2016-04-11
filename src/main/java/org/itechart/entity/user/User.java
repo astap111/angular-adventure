@@ -1,4 +1,6 @@
-package org.itechart.entity;
+package org.itechart.entity.user;
+
+import org.itechart.entity.company.Company;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,6 +30,10 @@ public class User {
     private Date birthDate;
 
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "COMPANY_ID")
+    private Company company;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;

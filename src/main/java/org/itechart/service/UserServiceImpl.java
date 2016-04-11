@@ -1,6 +1,6 @@
 package org.itechart.service;
 
-import org.itechart.entity.User;
+import org.itechart.entity.user.User;
 import org.itechart.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
             @Override
             public Sort getSort() {
-                return null;
+                return new Sort("id");
             }
         });
     }

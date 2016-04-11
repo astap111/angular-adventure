@@ -1,7 +1,7 @@
 package org.itechart.configuration.security;
 
-import org.itechart.entity.Role;
-import org.itechart.entity.User;
+import org.itechart.entity.user.Role;
+import org.itechart.entity.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +38,7 @@ public class SecurityUser extends User implements UserDetails {
 
         if (userRoles != null) {
             for (Role role : userRoles) {
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRoleName());
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRoleName().name());
                 authorities.add(authority);
             }
         }

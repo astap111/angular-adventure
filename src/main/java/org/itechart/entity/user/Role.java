@@ -1,18 +1,19 @@
-package org.itechart.entity;
+package org.itechart.entity.user;
 
 import javax.persistence.*;
 
 @Embeddable
 @Table(name = "ROLES")
 public class Role {
+    @Enumerated(EnumType.STRING)
     @Column(name = "role_name", nullable = false)
-    private String roleName;
+    private UserRole roleName;
 
-    public String getRoleName() {
+    public UserRole getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
+    public void setRoleName(UserRole roleName) {
         this.roleName = roleName;
     }
 }
