@@ -49,8 +49,8 @@ var usersController = function ($scope, $http, $stateParams, $state) {
 };
 
 var userDetailsController = function ($scope, $http, $stateParams, $state) {
-    $scope.availableRoles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
-    $scope.availableStatuses = ['ACTIVE', 'BLOCKED'];
+    $scope.availableRoles = getUserRoles();
+    $scope.availableStatuses = getStatuses();
     $scope.user = {status: 'ACTIVE'};
 
     $http.get("api/users/" + $stateParams.userId)
@@ -70,8 +70,8 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
 };
 
 var addUserController = function ($scope, $http, $state) {
-    $scope.availableRoles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
-    $scope.availableStatuses = ['ACTIVE', 'BLOCKED'];
+    $scope.availableRoles = getUserRoles();
+    $scope.availableStatuses = getStatuses();
     $scope.user = {status: 'ACTIVE'};
 
     $scope.onFormSubmit = function () {
@@ -87,4 +87,12 @@ var addUserController = function ($scope, $http, $state) {
 
 function wrapUserDate(user) {
     user.birthDate = new Date(user.birthDate);
+}
+
+function getUserRoles() {
+    return [{roleName: 'ROLE_SYSTEM_ADMIN'}, {roleName: 'ROLE_ADMIN'}, {roleName: 'ROLE_DISPATCHER'}, {roleName: 'ROLE_MANAGER'}, {roleName: 'ROLE_CONTROLLER'}, {roleName: 'ROLE_OWNER'}];
+}
+
+function getStatuses() {
+    return ['ACTIVE', 'BLOCKED'];
 }

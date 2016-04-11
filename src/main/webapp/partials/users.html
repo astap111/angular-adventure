@@ -22,7 +22,7 @@
                 {{ user.login }}
             </td>
             <td>
-                {{ user.roles[0].roleName }}
+                <span ng-repeat="role in user.roles">&nbsp&nbsp&nbsp{{ role.roleName }}</span>
             </td>
         </tr>
         </tbody>
