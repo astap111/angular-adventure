@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 @Entity
 @DiscriminatorValue("CLIENT")
-public class ServiceCompany extends Company {
+public class CarrierCompany extends Company {
     private ArrayList<String> transports = new ArrayList<>();
 
     public ArrayList<String> getTransports() {

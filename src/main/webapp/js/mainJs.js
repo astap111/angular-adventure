@@ -1,11 +1,13 @@
 var app = angular.module('userApp', ['ui.router']);
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider) {
     $stateProvider
         .state('main', {
             url: '/'
         })
 
+
+        // USERS
         .state('users', {
             url: '/users?page&pageSize',
             templateUrl: 'partials/users.html',
@@ -26,10 +28,35 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: '/users/add',
             templateUrl: 'partials/userDetails.html',
             controller: addUserController
+        })
+
+
+        // COMPANIES
+        .state('companies', {
+            url: '/companies?page&pageSize',
+            templateUrl: 'partials/companies.html',
+            controller: companiesController,
+            params: {
+                page: '0',
+                pageSize: '5'
+            }
+        })
+
+        .state('companyDetails', {
+            url: '/companies/{companyId:int}',
+            templateUrl: 'partials/companyDetails.html',
+            controller: companyDetailsController
+        })
+
+        .state('addCompany', {
+            url: '/companies/add',
+            templateUrl: 'partials/companyDetails.html',
+            controller: addCompanyController
         });
+
 });
 
-var usersController = function ($scope, $http, $stateParams, $state) {
+var usersController = function ($scope, $http, $stateParams) {
     var self = this;
     self.page = parseInt($stateParams.page, 10);
     self.pageSize = parseInt($stateParams.pageSize, 10);
@@ -39,11 +66,34 @@ var usersController = function ($scope, $http, $stateParams, $state) {
     function updatePage() {
         $http({
             url: 'api/users',
-            method: 'GET',
-            params: {page: self.page, pageSize: self.pageSize}
+            params: {page: self.page, pageSize: self.pageSize},
+            method: 'GET'
         }).then(function (response) {
             $scope.pageCtx = response.data;
             $scope.users = response.data.content;
+            $scope.pager = {pages: []};
+            for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
+                $scope.pager.pages.push(i);
+            }
+        });
+    }
+};
+
+var companiesController = function ($scope, $http, $stateParams) {
+    var self = this;
+    self.page = parseInt($stateParams.page, 10);
+    self.pageSize = parseInt($stateParams.pageSize, 10);
+
+    updatePage();
+
+    function updatePage() {
+        $http({
+            url: 'api/companies',
+            params: {page: self.page, pageSize: self.pageSize},
+            method: 'GET'
+        }).then(function (response) {
+            $scope.pageCtx = response.data;
+            $scope.companies = response.data.content;
             $scope.pager = {pages: []};
             for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
                 $scope.pager.pages.push(i);
@@ -66,10 +116,26 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
     $scope.onFormSubmit = function () {
         $http.post('api/users', $scope.user)
             .then(
-            function (response) {
-                $state.go('users');
-            }
-        );
+                function (response) {
+                    $state.go('users');
+                }
+            );
+    }
+};
+
+var companyDetailsController = function ($scope, $http, $stateParams, $state) {
+    $http.get('api/companies/' + $stateParams.companyId)
+        .then(function (response) {
+            $scope.company = response.data;
+        });
+
+    $scope.onFormSubmit = function () {
+        $http.post('api/companies', $scope.company)
+            .then(
+                function (response) {
+                    $state.go('companies');
+                }
+            );
     }
 };
 
@@ -81,10 +147,21 @@ var addUserController = function ($scope, $http, $state) {
     $scope.onFormSubmit = function () {
         $http.put('api/users', $scope.user)
             .then(
-            function (response) {
-                $state.go('users');
-            }
-        );
+                function (response) {
+                    $state.go('users');
+                }
+            );
+    }
+};
+
+var addCompanyController = function ($scope, $http, $state) {
+    $scope.onFormSubmit = function () {
+        $http.put('api/companies', $scope.company)
+            .then(
+                function (response) {
+                    $state.go('companies');
+                }
+            );
     }
 };
 
