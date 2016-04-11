@@ -5,9 +5,8 @@
     <form ng-submit="onFormSubmit()" name="userForm" novalidate class="form-horizontal user-form" role="form">
         <div class="form-group">
             <label for="login" class="col-sm-2 control-label">Login:</label>
-
             <div class="col-sm-6">
-                <input id="login" name="login" type="text" class="form-control" ng-model="user.login" required="">
+                <input id="login" name="login" type="text" class="form-control" ng-model="user.login" required>
             </div>
             <div ng-show="userForm.$submitted || userForm.login.$touched" class="col-sm-4">
                 <label ng-show="userForm.login.$error.required" class="text-danger">Enter login</label>
@@ -16,7 +15,6 @@
 
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label">Password:</label>
-
             <div class="col-sm-6">
                 <input id="password" name="password" type="password" class="form-control" ng-model="user.password"
                        required>
@@ -28,33 +26,36 @@
 
         <div class="form-group">
             <label for="role" class="col-sm-2 control-label">Role:</label>
-
             <div class="col-sm-6">
                 <select id="role" ng-model="user.roles"
-                        ng-options="role.roleName for role in roles track by role.roleName" class="form-control"
+                        ng-options="role.roleName for role in availableRoles track by role.roleName" class="form-control"
                         multiple></select>
             </div>
         </div>
 
         <div class="form-group">
             <label for="firstName" class="col-sm-2 control-label">First Name:</label>
-
             <div class="col-sm-6">
-                <input id="firstName" type="text" class="form-control" ng-model="user.firstName">
+                <input id="firstName" name="firstName" type="text" class="form-control" ng-model="user.firstName"
+                       required>
+                <div ng-show="userForm.$submitted || userForm.firstName.$touched" class="col-sm-4">
+                    <label ng-show="userForm.firstName.$error.required" class="text-danger">Enter first name</label>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             <label for="lastName" class="col-sm-2 control-label">Last Name:</label>
-
             <div class="col-sm-6">
-                <input id="lastName" type="text" class="form-control" ng-model="user.lastName">
+                <input id="lastName" name="lastName" type="text" class="form-control" ng-model="user.lastName" required>
+                <div ng-show="userForm.$submitted || userForm.lastName.$touched" class="col-sm-4">
+                    <label ng-show="userForm.lastName.$error.required" class="text-danger">Enter last name</label>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             <label for="middleName" class="col-sm-2 control-label">Middle Name:</label>
-
             <div class="col-sm-6">
                 <input id="middleName" type="text" class="form-control" ng-model="user.middleName">
             </div>
@@ -62,7 +63,6 @@
 
         <div class="form-group">
             <label for="birthdate" class="col-sm-2 control-label">Birth Date:</label>
-
             <div class="col-sm-6">
                 <input id="birthdate" type="date" class="form-control" ng-model="user.birthDate">
             </div>
@@ -70,12 +70,20 @@
 
         <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Email:</label>
-
             <div class="col-sm-6">
                 <input type="email" id="email" name="email" class="form-control" ng-model="user.email">
             </div>
             <div ng-show="userForm.$submitted || userForm.email.$touched" class="col-sm-4">
                 <label ng-show="userForm.email.$error.email" class="text-danger">Enter valid email</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Status:</label>
+            <div class="col-sm-6">
+                <select name="status" id="status"
+                        ng-options="status for status in availableStatuses track by status"
+                        ng-model="user.status"></select>
             </div>
         </div>
 
@@ -116,8 +124,9 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-default col-sm-1 col-sm-offset-5" ng-disabled="userForm.$invalid"
+            <input type="submit" class="btn btn-default col-sm-1 col-sm-offset-4" ng-disabled="userForm.$invalid"
                    value="Save"/>
+            <button ui-sref="users" class="btn btn-default col-sm-1">Back</button>
         </div>
     </form>
 

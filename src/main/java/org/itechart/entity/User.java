@@ -29,7 +29,8 @@ public class User {
 
     private String email;
 
-    private Boolean isActive;
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     @Embedded
     private Address address;
@@ -121,11 +122,11 @@ public class User {
         this.address = address;
     }
 
-    public Boolean getActive() {
-        return isActive;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setActive(Boolean active) {
-        isActive = active;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 }

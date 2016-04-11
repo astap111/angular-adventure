@@ -40,8 +40,7 @@ var usersController = function ($scope, $http, $stateParams, $state) {
         }).then(function (response) {
             $scope.pageCtx = response.data;
             $scope.users = response.data.content;
-            $scope.pager = {};
-            $scope.pager.pages = [];
+            $scope.pager = {pages: []};
             for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
                 $scope.pager.pages.push(i);
             }
@@ -50,7 +49,9 @@ var usersController = function ($scope, $http, $stateParams, $state) {
 };
 
 var userDetailsController = function ($scope, $http, $stateParams, $state) {
-    $scope.roles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
+    $scope.availableRoles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
+    $scope.availableStatuses = ['ACTIVE', 'INCATIVE'];
+    $scope.user = {status: 'ACTIVE'};
 
     $http.get("api/users/" + $stateParams.userId)
         .then(function (response) {
@@ -69,7 +70,9 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
 };
 
 var addUserController = function ($scope, $http, $state) {
-    $scope.roles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
+    $scope.availableRoles = [{roleName: 'ROLE_USER'}, {roleName: 'ROLE_ADMIN'}];
+    $scope.availableStatuses = ['ACTIVE', 'INCATIVE'];
+    $scope.user = {status: 'ACTIVE'};
 
     $scope.onFormSubmit = function () {
         $http.put("api/users", $scope.user)
