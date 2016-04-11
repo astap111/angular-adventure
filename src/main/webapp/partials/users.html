@@ -30,18 +30,30 @@
 </div>
 <nav>
     <ul class="pagination">
-        <li class="{{ pageCtx.number > 0 ? 'enabled' : 'disabled'}}">
+        <li ng-show="pageCtx.number > 0" class="enabled">
             <a ui-sref="users({page : pageCtx.number - 1, pageSize : pageCtx.size})" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
+        <li ng-hide="pageCtx.number > 0" class="disabled">
+            <a aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
         <li class="{{ page ==  pageCtx.number ? 'active' : '' }}" ng-repeat="page in pager.pages">
             <a ui-sref="users({page : page})">
                 {{ page + 1 }}
             </a>
         </li>
-        <li class="{{ pageCtx.number + 1 < pageCtx.totalPages ? 'enabled' : 'disabled' }}">
+
+        <li ng-show="pageCtx.number + 1 < pageCtx.totalPages" class="enabled">
             <a ui-sref="users({page : pageCtx.number + 1, pageSize : pageCtx.size})" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <li ng-hide="pageCtx.number + 1 < pageCtx.totalPages" class="disabled">
+            <a aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
