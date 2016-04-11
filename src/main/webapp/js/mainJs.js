@@ -2,9 +2,13 @@ var app = angular.module('userApp', ['ui.router']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
+        .state('main', {
+            url: '/'
+        })
+
         .state('users', {
-            url: "/users?page&pageSize",
-            templateUrl: "partials/users.html",
+            url: '/users?page&pageSize',
+            templateUrl: 'partials/users.html',
             controller: usersController,
             params: {
                 page: '0',
@@ -13,14 +17,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         })
 
         .state('userDetails', {
-            url: "/users/{userId:int}",
-            templateUrl: "partials/userDetails.html",
+            url: '/users/{userId:int}',
+            templateUrl: 'partials/userDetails.html',
             controller: userDetailsController
         })
 
         .state('addUser', {
-            url: "/users/add",
-            templateUrl: "partials/userDetails.html",
+            url: '/users/add',
+            templateUrl: 'partials/userDetails.html',
             controller: addUserController
         });
 });
@@ -34,8 +38,8 @@ var usersController = function ($scope, $http, $stateParams, $state) {
 
     function updatePage() {
         $http({
-            url: "api/users",
-            method: "GET",
+            url: 'api/users',
+            method: 'GET',
             params: {page: self.page, pageSize: self.pageSize}
         }).then(function (response) {
             $scope.pageCtx = response.data;
@@ -53,14 +57,14 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
     $scope.availableStatuses = getStatuses();
     $scope.user = {status: 'ACTIVE'};
 
-    $http.get("api/users/" + $stateParams.userId)
+    $http.get('api/users/' + $stateParams.userId)
         .then(function (response) {
             $scope.user = response.data;
             wrapUserDate($scope.user);
         });
 
     $scope.onFormSubmit = function () {
-        $http.post("api/users", $scope.user)
+        $http.post('api/users', $scope.user)
             .then(
             function (response) {
                 $state.go('users');
@@ -75,7 +79,7 @@ var addUserController = function ($scope, $http, $state) {
     $scope.user = {status: 'ACTIVE'};
 
     $scope.onFormSubmit = function () {
-        $http.put("api/users", $scope.user)
+        $http.put('api/users', $scope.user)
             .then(
             function (response) {
                 $state.go('users');
