@@ -1,5 +1,14 @@
 var app = angular.module('userApp', ['ui.router']);
 
+app.controller('applicationController', function ($scope, $http) {
+    $http
+        .get('api/users/currentUser')
+        .then(function (response) {
+            $scope.loggedUser = response.data;
+        });
+});
+
+
 app.config(function ($stateProvider) {
     $stateProvider
         .state('main', {

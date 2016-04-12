@@ -2,12 +2,14 @@ package org.itechart.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.itechart.configuration.security.SecurityUser;
 import org.itechart.entity.user.User;
 import org.itechart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,6 +38,13 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public void updateUser(@RequestBody User user) {
         userService.update(user);
+    }
+
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+    public SecurityUser getCurrentUser() {
+        SecurityUser user = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setPassword(null);
+        return user;
     }
 
     @ExceptionHandler(Exception.class)

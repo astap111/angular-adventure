@@ -38,9 +38,9 @@
             </button>
             <a ui-sref="main" class="navbar-brand">Warehouse Control</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse" ng-controller="applicationController">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="">Your profile</a></li>
+                <li><a href="">{{ loggedUser.firstName + " " + loggedUser.lastName }}</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
