@@ -16,10 +16,10 @@ import java.util.List;
         include = JsonTypeInfo.As.PROPERTY,
         property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = CarrierCompany.class, name = "CarrierCompany"),
-        @JsonSubTypes.Type(value = WarehouseCompany.class, name = "WarehouseCompany"),
-        @JsonSubTypes.Type(value = SenderCompany.class, name = "SenderCompany"),
-        @JsonSubTypes.Type(value = ReceiverCompany.class, name = "ReceiverCompany")
+        @JsonSubTypes.Type(value = CarrierCompany.class, name = "CARRIER_COMPANY"),
+        @JsonSubTypes.Type(value = WarehouseCompany.class, name = "WAREHOUSE_COMPANY"),
+        @JsonSubTypes.Type(value = SenderCompany.class, name = "SENDER_COMPANY"),
+        @JsonSubTypes.Type(value = ReceiverCompany.class, name = "RECEIVER_COMPANY")
 })
 public abstract class Company {
     @Id

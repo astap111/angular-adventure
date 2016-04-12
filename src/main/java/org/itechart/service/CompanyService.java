@@ -1,6 +1,7 @@
 package org.itechart.service;
 
 import org.itechart.entity.company.Company;
+import org.itechart.entity.company.CompanyType;
 import org.springframework.data.domain.Page;
 
 public interface CompanyService {
@@ -10,5 +11,5 @@ public interface CompanyService {
 
     Company findOne(Long id);
 
-    Page<Company> findAll(int page, int pageSize);
+    Page<? extends Company> findAll(CompanyType companyType, int page, int pageSize);
 }

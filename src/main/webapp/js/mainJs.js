@@ -37,6 +37,7 @@ app.config(function ($stateProvider) {
             templateUrl: 'partials/companies.html',
             controller: companiesController,
             params: {
+                companyType: '',
                 page: '0',
                 pageSize: '5'
             }
@@ -122,13 +123,18 @@ var companiesController = function ($scope, $http, $stateParams) {
     var self = this;
     self.page = parseInt($stateParams.page, 10);
     self.pageSize = parseInt($stateParams.pageSize, 10);
+    self.companyType = $stateParams.companyType;
 
     updatePage();
 
     function updatePage() {
         $http({
             url: 'api/companies',
-            params: {page: self.page, pageSize: self.pageSize},
+            params: {
+                companyType: self.companyType,
+                page: self.page,
+                pageSize: self.pageSize
+            },
             method: 'GET'
         }).then(function (response) {
             $scope.pageCtx = response.data;
@@ -167,8 +173,6 @@ var addCompanyController = function ($scope, $http, $state) {
             );
     }
 };
-
-
 
 
 function wrapUserDate(user) {

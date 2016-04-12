@@ -1,8 +1,10 @@
 package org.itechart.service;
 
 import org.hibernate.Hibernate;
+import org.itechart.entity.company.CarrierCompany;
 import org.itechart.entity.company.Company;
-import org.itechart.repository.CompanyRepository;
+import org.itechart.entity.company.CompanyType;
+import org.itechart.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class CompanyServiceImpl implements CompanyService {
+
+    @Autowired
+    private WarehouseCompanyRepository warehouseCompanyRepository;
+
+    @Autowired
+    private CarrierCompanyRepository carrierCompanyRepository;
+
+    @Autowired
+    private SenderCompanyRepository senderCompanyRepository;
+
+    @Autowired
+    private ReceiverCompanyRepository receiverCompanyRepository;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -41,8 +55,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Page<Company> findAll(int page, int pageSize) {
-        Page<Company> companiesPage = companyRepository.findAll(new Pageable() {
+    public Page<? extends Company> findAll(CompanyType companyType, int page, int pageSize) {
+        Pageable pageable = new Pageable() {
             @Override
             public int getPageNumber() {
                 return page;
@@ -62,7 +76,30 @@ public class CompanyServiceImpl implements CompanyService {
             public Sort getSort() {
                 return new Sort("id");
             }
-        });
+        };
+
+        Page<? extends Company> companiesPage;
+
+        switch (companyType) {
+            case CARRIER_COMPANY:
+                companiesPage = carrierCompanyRepository.findAll(pageable);
+                for (Company company : companiesPage.getContent()) {
+                    Hibernate.initialize(((CarrierCompany) company).getTransports());
+                }
+                break;
+            case RECEIVER_COMPANY:
+                companiesPage = receiverCompanyRepository.findAll(pageable);
+                break;
+            case SENDER_COMPANY:
+                companiesPage = senderCompanyRepository.findAll(pageable);
+                break;
+            case WAREHOUSE_COMPANY:
+                companiesPage = warehouseCompanyRepository.findAll(pageable);
+                break;
+            default:
+                companiesPage = companyRepository.findAll(pageable);
+        }
+
         for (Company company : companiesPage.getContent()) {
             Hibernate.initialize(company.getUsers());
         }

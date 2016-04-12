@@ -1,11 +1,14 @@
 package org.itechart.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Entity
 public class Transport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transport_id_seq")
+    @SequenceGenerator(name = "transport_id_seq", sequenceName = "transport_id_seq")
+    private Long id;
+
     @Enumerated(EnumType.STRING)
     private TransportType type;
 

@@ -3,6 +3,7 @@ package org.itechart.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.itechart.entity.company.Company;
+import org.itechart.entity.company.CompanyType;
 import org.itechart.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,8 +20,8 @@ public class CompanyController {
     private CompanyService companyService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<Company> getCompanies(@RequestParam Integer page, @RequestParam Integer pageSize) {
-        return companyService.findAll(page, pageSize);
+    public Page<? extends Company> getCompanies(@RequestParam CompanyType companyType, @RequestParam int page, @RequestParam int pageSize) {
+        return companyService.findAll(companyType, page, pageSize);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
