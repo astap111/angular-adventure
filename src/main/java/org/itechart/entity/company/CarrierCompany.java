@@ -1,19 +1,25 @@
 package org.itechart.entity.company;
 
+import org.itechart.entity.Transport;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
-@DiscriminatorValue("CLIENT")
+@DiscriminatorValue("CARRIER")
 public class CarrierCompany extends Company {
-    private ArrayList<String> transports = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "carrier_id")
+    private List<Transport> transports;
 
-    public ArrayList<String> getTransports() {
+    public List<Transport> getTransports() {
         return transports;
     }
 
-    public void setTransports(ArrayList<String> transports) {
+    public void setTransports(List<Transport> transports) {
         this.transports = transports;
     }
 }

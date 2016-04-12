@@ -1,5 +1,6 @@
 package org.itechart.service;
 
+import org.hibernate.Hibernate;
 import org.itechart.entity.company.Company;
 import org.itechart.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,14 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company findOne(Long id) {
-        return companyRepository.findOne(id);
+        Company company = companyRepository.findOne(id);
+        Hibernate.initialize(company.getUsers());
+        return company;
     }
 
     @Override
     public Page<Company> findAll(int page, int pageSize) {
-        return companyRepository.findAll(new Pageable() {
+        Page<Company> companiesPage = companyRepository.findAll(new Pageable() {
             @Override
             public int getPageNumber() {
                 return page;
@@ -60,5 +63,9 @@ public class CompanyServiceImpl implements CompanyService {
                 return new Sort("id");
             }
         });
+        for (Company company : companiesPage.getContent()) {
+            Hibernate.initialize(company.getUsers());
+        }
+        return companiesPage;
     }
 }

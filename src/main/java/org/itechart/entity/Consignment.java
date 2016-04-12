@@ -1,6 +1,6 @@
 package org.itechart.entity;
 
-import org.itechart.entity.company.ClientCompany;
+import org.itechart.entity.company.WarehouseCompany;
 import org.itechart.entity.user.User;
 
 import javax.persistence.*;
@@ -17,15 +17,15 @@ public class Consignment {
 
     @ManyToOne
     @JoinColumn(name = "SENDER_ID")
-    private ClientCompany sender;
+    private WarehouseCompany sender;
 
     @ManyToOne
     @JoinColumn(name = "RECEIVER_ID")
-    private ClientCompany receiver;
+    private WarehouseCompany receiver;
 
     @ManyToOne
     @JoinColumn(name = "CARRIER_ID")
-    private ClientCompany carrier;
+    private WarehouseCompany carrier;
 
     private Date sendDate;
 
@@ -60,27 +60,27 @@ public class Consignment {
         this.id = id;
     }
 
-    public ClientCompany getSender() {
+    public WarehouseCompany getSender() {
         return sender;
     }
 
-    public void setSender(ClientCompany sender) {
+    public void setSender(WarehouseCompany sender) {
         this.sender = sender;
     }
 
-    public ClientCompany getReceiver() {
+    public WarehouseCompany getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(ClientCompany receiver) {
+    public void setReceiver(WarehouseCompany receiver) {
         this.receiver = receiver;
     }
 
-    public ClientCompany getCarrier() {
+    public WarehouseCompany getCarrier() {
         return carrier;
     }
 
-    public void setCarrier(ClientCompany carrier) {
+    public void setCarrier(WarehouseCompany carrier) {
         this.carrier = carrier;
     }
 

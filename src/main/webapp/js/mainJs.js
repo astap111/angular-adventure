@@ -53,9 +53,10 @@ app.config(function ($stateProvider) {
             templateUrl: 'partials/companyDetails.html',
             controller: addCompanyController
         });
-
 });
 
+
+// USER CTRL
 var usersController = function ($scope, $http, $stateParams) {
     var self = this;
     self.page = parseInt($stateParams.page, 10);
@@ -71,29 +72,6 @@ var usersController = function ($scope, $http, $stateParams) {
         }).then(function (response) {
             $scope.pageCtx = response.data;
             $scope.users = response.data.content;
-            $scope.pager = {pages: []};
-            for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
-                $scope.pager.pages.push(i);
-            }
-        });
-    }
-};
-
-var companiesController = function ($scope, $http, $stateParams) {
-    var self = this;
-    self.page = parseInt($stateParams.page, 10);
-    self.pageSize = parseInt($stateParams.pageSize, 10);
-
-    updatePage();
-
-    function updatePage() {
-        $http({
-            url: 'api/companies',
-            params: {page: self.page, pageSize: self.pageSize},
-            method: 'GET'
-        }).then(function (response) {
-            $scope.pageCtx = response.data;
-            $scope.companies = response.data.content;
             $scope.pager = {pages: []};
             for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
                 $scope.pager.pages.push(i);
@@ -123,6 +101,46 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
     }
 };
 
+var addUserController = function ($scope, $http, $state) {
+    $scope.availableRoles = getUserRoles();
+    $scope.availableStatuses = getStatuses();
+    $scope.user = {status: 'ACTIVE'};
+
+    $scope.onFormSubmit = function () {
+        $http.put('api/users', $scope.user)
+            .then(
+                function (response) {
+                    $state.go('users');
+                }
+            );
+    }
+};
+
+
+// COMPANY CTRL
+var companiesController = function ($scope, $http, $stateParams) {
+    var self = this;
+    self.page = parseInt($stateParams.page, 10);
+    self.pageSize = parseInt($stateParams.pageSize, 10);
+
+    updatePage();
+
+    function updatePage() {
+        $http({
+            url: 'api/companies',
+            params: {page: self.page, pageSize: self.pageSize},
+            method: 'GET'
+        }).then(function (response) {
+            $scope.pageCtx = response.data;
+            $scope.companies = response.data.content;
+            $scope.pager = {pages: []};
+            for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
+                $scope.pager.pages.push(i);
+            }
+        });
+    }
+};
+
 var companyDetailsController = function ($scope, $http, $stateParams, $state) {
     $http.get('api/companies/' + $stateParams.companyId)
         .then(function (response) {
@@ -139,21 +157,6 @@ var companyDetailsController = function ($scope, $http, $stateParams, $state) {
     }
 };
 
-var addUserController = function ($scope, $http, $state) {
-    $scope.availableRoles = getUserRoles();
-    $scope.availableStatuses = getStatuses();
-    $scope.user = {status: 'ACTIVE'};
-
-    $scope.onFormSubmit = function () {
-        $http.put('api/users', $scope.user)
-            .then(
-                function (response) {
-                    $state.go('users');
-                }
-            );
-    }
-};
-
 var addCompanyController = function ($scope, $http, $state) {
     $scope.onFormSubmit = function () {
         $http.put('api/companies', $scope.company)
@@ -164,6 +167,8 @@ var addCompanyController = function ($scope, $http, $state) {
             );
     }
 };
+
+
 
 
 function wrapUserDate(user) {

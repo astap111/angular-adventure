@@ -1,5 +1,7 @@
 package org.itechart.entity.company;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.itechart.entity.user.User;
 
 import javax.persistence.*;
@@ -9,6 +11,16 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "COMPANY_TYPE")
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = CarrierCompany.class, name = "CarrierCompany"),
+        @JsonSubTypes.Type(value = WarehouseCompany.class, name = "WarehouseCompany"),
+        @JsonSubTypes.Type(value = SenderCompany.class, name = "SenderCompany"),
+        @JsonSubTypes.Type(value = ReceiverCompany.class, name = "ReceiverCompany")
+})
 public abstract class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_id_seq")
