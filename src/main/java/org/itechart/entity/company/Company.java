@@ -2,6 +2,8 @@ package org.itechart.entity.company;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.itechart.entity.user.User;
 
 import javax.persistence.*;
@@ -29,7 +31,8 @@ public abstract class Company {
 
     private String name;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<User> users = new ArrayList<>();
 
     public Long getId() {

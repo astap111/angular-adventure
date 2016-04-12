@@ -1,17 +1,17 @@
 package org.itechart.entity.company;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.itechart.entity.Transport;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @DiscriminatorValue("CARRIER")
 public class CarrierCompany extends Company {
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "carrier_id")
     private List<Transport> transports;
 

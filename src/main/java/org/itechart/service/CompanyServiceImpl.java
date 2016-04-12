@@ -1,7 +1,5 @@
 package org.itechart.service;
 
-import org.hibernate.Hibernate;
-import org.itechart.entity.company.CarrierCompany;
 import org.itechart.entity.company.Company;
 import org.itechart.entity.company.CompanyType;
 import org.itechart.repository.*;
@@ -49,9 +47,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company findOne(Long id) {
-        Company company = companyRepository.findOne(id);
-        Hibernate.initialize(company.getUsers());
-        return company;
+        return companyRepository.findOne(id);
     }
 
     @Override
@@ -78,31 +74,27 @@ public class CompanyServiceImpl implements CompanyService {
             }
         };
 
-        Page<? extends Company> companiesPage;
+        Page<? extends Company> companiesPage = null;
 
-        switch (companyType) {
-            case CARRIER_COMPANY:
-                companiesPage = carrierCompanyRepository.findAll(pageable);
-                for (Company company : companiesPage.getContent()) {
-                    Hibernate.initialize(((CarrierCompany) company).getTransports());
-                }
-                break;
-            case RECEIVER_COMPANY:
-                companiesPage = receiverCompanyRepository.findAll(pageable);
-                break;
-            case SENDER_COMPANY:
-                companiesPage = senderCompanyRepository.findAll(pageable);
-                break;
-            case WAREHOUSE_COMPANY:
-                companiesPage = warehouseCompanyRepository.findAll(pageable);
-                break;
-            default:
-                companiesPage = companyRepository.findAll(pageable);
+        if (companyType == null) {
+            companiesPage = companyRepository.findAll(pageable);
+        } else {
+            switch (companyType) {
+                case CARRIER_COMPANY:
+                    companiesPage = carrierCompanyRepository.findAll(pageable);
+                    break;
+                case RECEIVER_COMPANY:
+                    companiesPage = receiverCompanyRepository.findAll(pageable);
+                    break;
+                case SENDER_COMPANY:
+                    companiesPage = senderCompanyRepository.findAll(pageable);
+                    break;
+                case WAREHOUSE_COMPANY:
+                    companiesPage = warehouseCompanyRepository.findAll(pageable);
+                    break;
+            }
         }
 
-        for (Company company : companiesPage.getContent()) {
-            Hibernate.initialize(company.getUsers());
-        }
         return companiesPage;
     }
 }

@@ -33,7 +33,7 @@ app.config(function ($stateProvider) {
 
         // COMPANIES
         .state('companies', {
-            url: '/companies?page&pageSize',
+            url: '/companies?companyType&page&pageSize',
             templateUrl: 'partials/companies.html',
             controller: companiesController,
             params: {

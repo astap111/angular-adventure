@@ -1,5 +1,7 @@
 package org.itechart.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.itechart.entity.company.WarehouseCompany;
 import org.itechart.entity.user.User;
 
@@ -31,7 +33,8 @@ public class Consignment {
 
     private Date receiveDate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "CONSIGNMENT_ID")
     private List<Product> products = new ArrayList<>();
 

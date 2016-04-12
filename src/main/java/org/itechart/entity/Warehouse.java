@@ -1,5 +1,7 @@
 package org.itechart.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.itechart.entity.company.Company;
 
 import javax.persistence.*;
@@ -20,7 +22,8 @@ public class Warehouse {
     @Enumerated(EnumType.STRING)
     private StorageType storageType;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "WAREHOUSE_ID")
     private List<StorageCell> storage = new ArrayList<>();
 

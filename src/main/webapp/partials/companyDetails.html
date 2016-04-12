@@ -1,4 +1,22 @@
-<h1 class="page-header">Company Details</h1>
+<h1 class="page-header">
+    <span ng-switch on="company.type">
+        <span ng-switch-when="CARRIER_COMPANY">
+            Carrier Company Details
+        </span>
+        <span ng-switch-when="WAREHOUSE_COMPANY">
+            Warehouse Company Details
+        </span>
+        <span ng-switch-when="SENDER_COMPANY">
+            Sender Company Details
+        </span>
+        <span ng-switch-when="RECEIVER_COMPANY">
+            Receiver Company Details
+        </span>
+        <span ng-switch-default>
+            Company Details
+        </span>
+    </span>
+</h1>
 
 <div class="row">
 
