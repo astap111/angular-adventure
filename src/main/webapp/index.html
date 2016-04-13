@@ -43,7 +43,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="">{{ loggedUser.firstName + " " + loggedUser.lastName }}</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/login.html?logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -54,7 +54,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li><a ui-sref="users">Users</a></li>
-                <li>
+                <li ng-show="authService.checkRights(['ROLE_SYSTEM_ADMIN'])">
                     <a ui-sref="companies({companyType:'WAREHOUSE_COMPANY'})">
                         Warehouses
                     </a>
