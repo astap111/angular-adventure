@@ -28,7 +28,7 @@ app.run([
 
 app.service('authService', function ($rootScope) {
     this.checkAccess = function (event, toState, toParams, fromState, fromParams) {
-        if (toState.data !== undefined && toState.data.permitTo) {
+        if (toState.data && toState.data.permitTo) {
             var permitTo = toState.data.permitTo;
             var currentRoles = $rootScope.loggedUserRoles;
 
@@ -40,9 +40,7 @@ app.service('authService', function ($rootScope) {
 
     this.checkRights = function (permitTo) {
         var currentRoles = $rootScope.loggedUserRoles;
-        if (permitTo) {
-            return _checkIntersection(currentRoles, permitTo);
-        }
+        return _checkIntersection(currentRoles, permitTo);
     };
 
     _checkIntersection = function (currentRoles, permitTo) {
