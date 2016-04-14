@@ -1,4 +1,4 @@
-var app = angular.module('userApp', ['ui.router']);
+var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload']);
 
 app.run([
     '$rootScope', '$state', '$stateParams', '$http', 'authService',

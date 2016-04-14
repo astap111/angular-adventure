@@ -7,16 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-    private final String PATH_TO_PHOTOS = "d:\\IdeaProjects\\angular-adventure\\src\\main\\webapp\\photo\\";
-
     @Autowired
     private UserRepository userRepository;
 
@@ -25,12 +21,6 @@ public class UserServiceImpl implements UserService {
         if (user.getId() == null) {
             throw new IllegalArgumentException("Failed to update user with id == null");
         }
-
-        byte[] bytes = Base64Utils.decodeFromString(user.getPhoto());
-        FileOutputStream out = new FileOutputStream(PATH_TO_PHOTOS + user.getId() + ".jpg");
-        out.write(bytes);
-        out.close();
-
         userRepository.save(user);
     }
 
@@ -41,11 +31,6 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(user);
-
-        byte[] bytes = Base64Utils.decodeFromString(user.getPhoto());
-        FileOutputStream out = new FileOutputStream(PATH_TO_PHOTOS + user.getId() + ".jpg");
-        out.write(bytes);
-        out.close();
     }
 
     @Override

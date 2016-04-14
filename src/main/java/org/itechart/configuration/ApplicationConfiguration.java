@@ -1,13 +1,18 @@
 package org.itechart.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
+
+import javax.servlet.annotation.MultipartConfig;
 
 @Configuration
 @ComponentScan("org.itechart")
 @EnableWebMvc
+@MultipartConfig
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
@@ -26,5 +31,10 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+    @Bean
+    public StandardServletMultipartResolver multipartResolver(){
+        return new StandardServletMultipartResolver();
     }
 }
