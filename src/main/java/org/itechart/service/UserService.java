@@ -3,10 +3,13 @@ package org.itechart.service;
 import org.itechart.entity.user.User;
 import org.springframework.data.domain.Page;
 
-public interface UserService {
-    void update(User user);
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-    void save(User user);
+public interface UserService {
+    void update(User user) throws IOException;
+
+    void save(User user) throws IOException;
 
     User findOne(Long id);
 

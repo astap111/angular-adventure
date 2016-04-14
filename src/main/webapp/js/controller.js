@@ -34,14 +34,32 @@ var userDetailsController = function ($scope, $http, $stateParams, $state) {
         });
 
     $scope.onFormSubmit = function () {
-        $http.post('api/users', $scope.user)
-            .then(
-                function (response) {
-                    $state.go('users');
-                }
-            );
+        if (imageBlob) {
+            var base64data;
+            var reader = new FileReader();
+            reader.readAsDataURL(imageBlob);
+            reader.onloadend = function () {
+                base64data = reader.result;
+                base64data = base64data.substr(base64data.indexOf(',') + 1)
+
+                $scope.user.photo = base64data;
+
+                updateUser($state, $scope, $http);
+            };
+        } else {
+            updateUser($state, $scope, $http);
+        }
     }
 };
+
+function updateUser($state, $scope, $http) {
+    $http.post('api/users', $scope.user)
+        .then(
+            function (response) {
+                $state.go('users');
+            }
+        );
+}
 
 var addUserController = function ($scope, $http, $state) {
     $scope.availableRoles = getUserRoles();

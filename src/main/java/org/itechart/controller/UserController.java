@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping(value = "api/users")
 public class UserController {
@@ -31,12 +33,12 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void createUser(@RequestBody User user) {
+    public void createUser(@RequestBody User user) throws IOException {
         userService.save(user);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void updateUser(@RequestBody User user) {
+    public void updateUser(@RequestBody User user) throws IOException {
         userService.update(user);
     }
 
