@@ -1,0 +1,43 @@
+<h1 class="page-header">Consignment Details</h1>
+
+<div class="row">
+
+    <form ng-submit="onFormSubmit()" name="consignmentForm" novalidate class="form-horizontal validation-form"
+          role="form">
+        <div class="form-group">
+            <label for="number" class="col-sm-2 control-label">Number:</label>
+            <div class="col-sm-6">
+                <input id="number" name="number" type="text" class="form-control" ng-model="consignment.number"
+                       required>
+            </div>
+            <div ng-show="consignmentForm.$submitted || consignmentForm.number.$touched" class="col-sm-4">
+                <label ng-show="consignmentForm.number.$error.required" class="text-danger">Enter number</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="signDate" class="col-sm-2 control-label">Sign Date:</label>
+            <div class="col-sm-6">
+                <input id="signDate" name="signDate" type="date" class="form-control" ng-model="consignment.signDate">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="sender" class="col-sm-2 control-label">Sender:</label>
+            <div class="col-sm-6">
+                <select id="sender" ng-model="consignment.sender" class="form-control selectpicker"
+                        ng-options="senderCompany.name for senderCompany in senderCompanies track by senderCompany.id"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-default col-sm-1 col-sm-offset-4" ng-disabled="consignmentForm.$invalid"
+                   value="Save"/>
+            <button ui-sref="consignments" class="btn btn-default col-sm-1">Back</button>
+        </div>
+    </form>
+
+</div>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">

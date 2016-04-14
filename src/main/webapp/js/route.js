@@ -54,5 +54,29 @@ app.config(function ($stateProvider) {
             url: '/companies/add',
             templateUrl: 'partials/companyDetails.html',
             controller: addCompanyController
-        });
+        })
+
+
+        // CONSIGNMENTS
+        .state('consignments', {
+            url: '/consignments?page&pageSize',
+            templateUrl: 'partials/consignments.html',
+            controller: consignmentsController,
+            params: {
+                page: '0',
+                pageSize: '5'
+            }
+        })
+
+        .state('consignmentDetails', {
+            url: '/consignments/{consignmentId:int}',
+            templateUrl: 'partials/consignmentDetails.html',
+            controller: consignmentDetailsController
+        })
+
+        .state('addConsignment', {
+            url: '/consignments/add',
+            templateUrl: 'partials/consignmentDetails.html',
+            controller: addConsignmentController
+        })
 });

@@ -17,6 +17,8 @@ public class Consignment {
     @SequenceGenerator(name = "consignment_id_seq", sequenceName = "consignment_id_seq")
     private Long id;
 
+    private String number;
+
     @ManyToOne
     @JoinColumn(name = "SENDER_ID")
     private WarehouseCompany sender;
@@ -28,10 +30,6 @@ public class Consignment {
     @ManyToOne
     @JoinColumn(name = "CARRIER_ID")
     private WarehouseCompany carrier;
-
-    private Date sendDate;
-
-    private Date receiveDate;
 
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -46,11 +44,11 @@ public class Consignment {
     @JoinColumn(name = "CONTROLLER_ID")
     private User controller;
 
-    private Date consignmentDate;
+    private Date signDate;
 
-    private Date registrationDate;
+    private Date registerDate;
 
-    private Date controllerDate;
+    private Date controlDate;
 
     @Enumerated(EnumType.STRING)
     private LifecycleStatus status;
@@ -61,6 +59,14 @@ public class Consignment {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public WarehouseCompany getSender() {
@@ -87,22 +93,6 @@ public class Consignment {
         this.carrier = carrier;
     }
 
-    public Date getSendDate() {
-        return sendDate;
-    }
-
-    public void setSendDate(Date sendDate) {
-        this.sendDate = sendDate;
-    }
-
-    public Date getReceiveDate() {
-        return receiveDate;
-    }
-
-    public void setReceiveDate(Date receiveDate) {
-        this.receiveDate = receiveDate;
-    }
-
     public List<Product> getProducts() {
         return products;
     }
@@ -127,28 +117,28 @@ public class Consignment {
         this.controller = controller;
     }
 
-    public Date getConsignmentDate() {
-        return consignmentDate;
+    public Date getSignDate() {
+        return signDate;
     }
 
-    public void setConsignmentDate(Date consignmentDate) {
-        this.consignmentDate = consignmentDate;
+    public void setSignDate(Date signDate) {
+        this.signDate = signDate;
     }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
+    public Date getRegisterDate() {
+        return registerDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
-    public Date getControllerDate() {
-        return controllerDate;
+    public Date getControlDate() {
+        return controlDate;
     }
 
-    public void setControllerDate(Date controllerDate) {
-        this.controllerDate = controllerDate;
+    public void setControlDate(Date controlDate) {
+        this.controlDate = controlDate;
     }
 
     public LifecycleStatus getStatus() {

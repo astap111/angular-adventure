@@ -2,13 +2,15 @@ package org.itechart.service;
 
 import org.itechart.entity.company.Company;
 import org.itechart.entity.company.CompanyType;
+import org.itechart.other.PageableSortedById;
 import org.itechart.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -52,27 +54,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Page<? extends Company> findAll(CompanyType companyType, int page, int pageSize) {
-        Pageable pageable = new Pageable() {
-            @Override
-            public int getPageNumber() {
-                return page;
-            }
-
-            @Override
-            public int getPageSize() {
-                return pageSize;
-            }
-
-            @Override
-            public int getOffset() {
-                return page * pageSize;
-            }
-
-            @Override
-            public Sort getSort() {
-                return new Sort("id");
-            }
-        };
+        Pageable pageable = new PageableSortedById(page, pageSize);
 
         Page<? extends Company> companiesPage = null;
 
@@ -93,6 +75,28 @@ public class CompanyServiceImpl implements CompanyService {
                     companiesPage = warehouseCompanyRepository.findAll(pageable);
                     break;
             }
+        }
+
+        return companiesPage;
+    }
+
+    @Override
+    public List<? extends Company> findAll(CompanyType companyType) {
+        List<? extends Company> companiesPage = null;
+
+        switch (companyType) {
+            case CARRIER_COMPANY:
+                companiesPage = carrierCompanyRepository.findAll();
+                break;
+            case RECEIVER_COMPANY:
+                companiesPage = receiverCompanyRepository.findAll();
+                break;
+            case SENDER_COMPANY:
+                companiesPage = senderCompanyRepository.findAll();
+                break;
+            case WAREHOUSE_COMPANY:
+                companiesPage = warehouseCompanyRepository.findAll();
+                break;
         }
 
         return companiesPage;

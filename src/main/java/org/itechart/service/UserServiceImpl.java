@@ -1,11 +1,10 @@
 package org.itechart.service;
 
 import org.itechart.entity.user.User;
+import org.itechart.other.PageableSortedById;
 import org.itechart.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,27 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> findAll(int page, int pageSize) {
-        return userRepository.findAll(new Pageable() {
-            @Override
-            public int getPageNumber() {
-                return page;
-            }
-
-            @Override
-            public int getPageSize() {
-                return pageSize;
-            }
-
-            @Override
-            public int getOffset() {
-                return page * pageSize;
-            }
-
-            @Override
-            public Sort getSort() {
-                return new Sort("id");
-            }
-        });
+        return userRepository.findAll(new PageableSortedById(page, pageSize));
     }
 
     @Override
