@@ -95,12 +95,12 @@ var userDetailsController = function ($scope, $http, $stateParams, $state, FileU
     $scope.onFormSubmit = function () {
         var fd = new FormData();
         fd.append('file', $scope.imageBlob);
-        fd.append('user', $scope.user);
+        fd.append('user', angular.toJson($scope.user));
 
         $http.post('api/fileUpload', fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
-        })
+            })
             .then(
                 function (response) {
                     $state.go('users');
