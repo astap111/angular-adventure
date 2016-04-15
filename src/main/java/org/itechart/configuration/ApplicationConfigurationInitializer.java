@@ -19,6 +19,6 @@ public class ApplicationConfigurationInitializer implements WebApplicationInitia
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
         dispatcher.addMapping("/");
         dispatcher.setLoadOnStartup(1);
-        dispatcher.setMultipartConfig(new MultipartConfigElement("D:\\IdeaProjects\\angular-adventure\\src\\main\\webapp\\img\\", 1024 * 1024 * 5, 1024 * 1024 * 5 * 5, 1024 * 1024));
+        dispatcher.setMultipartConfig(new MultipartConfigElement("D:\\IdeaProjects\\angular-adventure\\src\\main\\webapp\\img\\", 1024 * 1024, 1024 * 1024 * 5, 1024 * 1024));
     }
 }
