@@ -133,9 +133,15 @@
                 </button>
             </div>
             <div class="col-sm-5">
-                <div id="resultImage" class="col-sm-offset-2 col-sm-5">
-
+                <div id="resultImageContainer" class="col-sm-offset-2 col-sm-5">
+                    <img id="user-photo" onerror="this.style.display='none'">
                 </div>
+                <script language="javascript" type="text/javascript">
+                    var d = new Date();
+                    document.getElementById("user-photo").src =
+                            "img/user{{user.id}}.jpg?ver=" +
+                            d.getTime();
+                </script>
             </div>
         </div>
 
@@ -153,8 +159,6 @@
                     <div class="modal-body">
                         <input id="file" type="file" nv-file-select uploader="uploader"
                                onchange="angular.element(this).scope().previewPhoto()"/><br/>
-
-                        Name: <span ng-bind="uploader.queue[0].file.name"></span><br/>
                         <div id="pictureForCrop"></div>
                     </div>
 

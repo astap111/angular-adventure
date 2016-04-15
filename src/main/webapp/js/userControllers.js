@@ -1,4 +1,3 @@
-// USER CTRL
 var usersController = function ($scope, $http, $stateParams) {
     var self = this;
     self.page = parseInt($stateParams.page, 10);
@@ -89,7 +88,7 @@ var userDetailsController = function ($scope, $http, $stateParams, $state, FileU
             $scope.imageBlob = blob;
         });
 
-        $('#resultImage').html(croppedCanvas);
+        $('#resultImageContainer').html(croppedCanvas);
     };
 
     $scope.onFormSubmit = function () {
@@ -97,7 +96,7 @@ var userDetailsController = function ($scope, $http, $stateParams, $state, FileU
         fd.append('file', $scope.imageBlob);
         fd.append('user', angular.toJson($scope.user));
 
-        $http.post('api/fileUpload', fd, {
+        $http.post('api/users', fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             })
@@ -123,132 +122,3 @@ var addUserController = function ($scope, $http, $state) {
             );
     }
 };
-
-
-// COMPANY CTRL
-var companiesController = function ($scope, $http, $stateParams) {
-    var self = this;
-    self.page = parseInt($stateParams.page, 10);
-    self.pageSize = parseInt($stateParams.pageSize, 10);
-    self.companyType = $stateParams.companyType;
-
-    updatePage();
-
-    function updatePage() {
-        $http({
-            url: 'api/companies',
-            params: {
-                companyType: self.companyType,
-                page: self.page,
-                pageSize: self.pageSize
-            },
-            method: 'GET'
-        }).then(function (response) {
-            $scope.pageCtx = response.data;
-            $scope.companies = response.data.content;
-            $scope.pager = {pages: []};
-            for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
-                $scope.pager.pages.push(i);
-            }
-        });
-    }
-};
-
-var companyDetailsController = function ($scope, $http, $stateParams, $state) {
-    $http.get('api/companies/' + $stateParams.companyId)
-        .then(function (response) {
-            $scope.company = response.data;
-        });
-
-    $scope.onFormSubmit = function () {
-        $http.post('api/companies', $scope.company)
-            .then(
-                function (response) {
-                    $state.go('companies');
-                }
-            );
-    }
-};
-
-var addCompanyController = function ($scope, $http, $state) {
-    $scope.onFormSubmit = function () {
-        $http.put('api/companies', $scope.company)
-            .then(
-                function (response) {
-                    $state.go('companies');
-                }
-            );
-    }
-};
-
-
-// CONSIGNMENT CTRL
-var consignmentsController = function ($scope, $http, $stateParams) {
-    var self = this;
-    self.page = parseInt($stateParams.page, 10);
-    self.pageSize = parseInt($stateParams.pageSize, 10);
-
-    updatePage();
-
-    function updatePage() {
-        $http({
-            url: 'api/consignments',
-            params: {page: self.page, pageSize: self.pageSize},
-            method: 'GET'
-        }).then(function (response) {
-            $scope.pageCtx = response.data;
-            $scope.consignments = response.data.content;
-            $scope.pager = {pages: []};
-            for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
-                $scope.pager.pages.push(i);
-            }
-        });
-    }
-};
-
-var consignmentDetailsController = function ($scope, $http, $stateParams, $state) {
-
-    $http.get('api/consignments/' + $stateParams.consignmentId)
-        .then(function (response) {
-            $scope.consignment = response.data;
-            wrapConsignmentDate($scope.consignment);
-        });
-
-    $scope.onFormSubmit = function () {
-        $http.post('api/consignments', $scope.consignment)
-            .then(
-                function (response) {
-                    $state.go('consignments');
-                }
-            );
-    }
-};
-
-
-var addConsignmentController = function ($scope, $http, $state) {
-    $scope.senderCompanies = $http({
-        url: 'api/companies',
-        params: {companyType: 'SENDER_COMPANY'},
-        method: 'GET'
-    }).then(function (response) {
-        $scope.pageCtx = response.data;
-        $scope.companies = response.data.content;
-    });
-
-    $scope.onFormSubmit = function () {
-        $http.put('api/consignments', $scope.consignment)
-            .then(
-                function (response) {
-                    $state.go('consignments');
-                }
-            );
-    }
-};
-
-// app.controller('FileUploadController', ['$rootScope', '$scope', 'FileUploader', function ($rootScope, $scope, FileUploader) {
-//     var uploader = $scope.uploader = new FileUploader({
-//         url: 'api/fileUpload',
-//         tagret: 'user' + 1
-//     });
-// }]);
-
