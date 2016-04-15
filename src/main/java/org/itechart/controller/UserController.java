@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void createUser(@RequestBody User user) throws IOException {
+    public void createUser(@RequestBody User user, @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
         userService.save(user);
     }
 

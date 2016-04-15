@@ -31,6 +31,9 @@ public class User {
 
     private String email;
 
+    @Transient
+    private Object photo;
+
     @ManyToOne
     @JoinColumn(name = "COMPANY_ID")
     private Company company;
@@ -142,5 +145,13 @@ public class User {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public Object getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Object photo) {
+        this.photo = photo;
     }
 }

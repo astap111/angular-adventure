@@ -22,19 +22,85 @@ var usersController = function ($scope, $http, $stateParams) {
     }
 };
 
-var userDetailsController = function ($scope, $http, $stateParams, $state) {
-    $scope.availableRoles = getUserRoles();
-    $scope.availableStatuses = getStatuses();
-    $scope.user = {status: 'ACTIVE'};
+var userDetailsController = function ($scope, $http, $stateParams, $state, FileUploader) {
+    init();
 
-    $http.get('api/users/' + $stateParams.userId)
-        .then(function (response) {
-            $scope.user = response.data;
-            wrapUserDate($scope.user);
+    function init() {
+        $scope.availableRoles = getUserRoles();
+        $scope.availableStatuses = getStatuses();
+        $scope.user = {status: 'ACTIVE'};
+
+        $http.get('api/users/' + $stateParams.userId)
+            .then(function (response) {
+                $scope.user = response.data;
+                wrapUserDate($scope.user);
+            });
+    }
+
+    // File upload
+    var uploader = $scope.uploader = new FileUploader();
+
+    //ImageCropper
+    $scope.previewPhoto = function () {
+        //Check File API support
+        if (window.File && window.FileList && window.FileReader) {
+            var filesInput = document.getElementById("file");
+            var file = document.querySelector('input[type=file]').files[0];
+            var pictureForCrop = document.getElementById("pictureForCrop");
+
+            //Only pics
+            if (!file.type.match('image')) return;
+
+            var picReader = new FileReader();
+
+            picReader.addEventListener("load", function (event) {
+                var picFile = event.target;
+                pictureForCrop.innerHTML = "<img id='previewPhoto' class='thumbnail' src='" + picFile.result + "'" +
+                    "title='" + picFile.name + "'/>";
+
+                $scope.$image = $('#previewPhoto').cropper({
+                    aspectRatio: 3 / 4,
+                    modal: true,
+                    crop: function (e) {
+                        // Output the result data for cropping image.
+                        console.log(e.x);
+                        console.log(e.y);
+                        console.log(e.width);
+                        console.log(e.height);
+                        console.log(e.rotate);
+                        console.log(e.scaleX);
+                        console.log(e.scaleY);
+                    }
+                });
+            });
+
+            //Read the image
+            picReader.readAsDataURL(file);
+        }
+        else {
+            console.log("Your browser does not support File API");
+        }
+    };
+
+    $scope.setResultToCanvas = function () {
+        var croppedCanvas = $scope.$image.cropper('getCroppedCanvas');
+
+        croppedCanvas.toBlob(function (blob) {
+            $scope.imageBlob = blob;
         });
 
+        $('#resultImage').html(croppedCanvas);
+    };
+
     $scope.onFormSubmit = function () {
-        $http.post('api/users', $scope.user)
+        var fd = new FormData();
+        fd.append('file', $scope.imageBlob);
+        fd.append('user', $scope.user);
+
+        $http.post('api/fileUpload', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+        })
             .then(
                 function (response) {
                     $state.go('users');
@@ -179,55 +245,10 @@ var addConsignmentController = function ($scope, $http, $state) {
     }
 };
 
-app.controller('FileUploadController', ['$rootScope', '$scope', 'FileUploader', function ($rootScope, $scope, FileUploader) {
-    var uploader = $scope.uploader = new FileUploader({
-        url: 'api/fileUpload'
-    });
+// app.controller('FileUploadController', ['$rootScope', '$scope', 'FileUploader', function ($rootScope, $scope, FileUploader) {
+//     var uploader = $scope.uploader = new FileUploader({
+//         url: 'api/fileUpload',
+//         tagret: 'user' + 1
+//     });
+// }]);
 
-    // FILTERS
-
-    uploader.filters.push({
-        name: 'customFilter',
-        fn: function (item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length < 10;
-        }
-    });
-
-    // CALLBACKS
-
-    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-        console.info('onWhenAddingFileFailed', item, filter, options);
-    };
-    uploader.onAfterAddingFile = function (fileItem) {
-        console.info('onAfterAddingFile', fileItem);
-    };
-    uploader.onAfterAddingAll = function (addedFileItems) {
-        console.info('onAfterAddingAll', addedFileItems);
-    };
-    uploader.onBeforeUploadItem = function (item) {
-        console.info('onBeforeUploadItem', item);
-    };
-    uploader.onProgressItem = function (fileItem, progress) {
-        console.info('onProgressItem', fileItem, progress);
-    };
-    uploader.onProgressAll = function (progress) {
-        console.info('onProgressAll', progress);
-    };
-    uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        console.info('onSuccessItem', fileItem, response, status, headers);
-    };
-    uploader.onErrorItem = function (fileItem, response, status, headers) {
-        console.info('onErrorItem', fileItem, response, status, headers);
-    };
-    uploader.onCancelItem = function (fileItem, response, status, headers) {
-        console.info('onCancelItem', fileItem, response, status, headers);
-    };
-    uploader.onCompleteItem = function (fileItem, response, status, headers) {
-        console.info('onCompleteItem', fileItem, response, status, headers);
-    };
-    uploader.onCompleteAll = function () {
-        console.info('onCompleteAll');
-    };
-
-    console.info('uploader', uploader);
-}]);
