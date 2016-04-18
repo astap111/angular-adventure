@@ -1,9 +1,9 @@
 package org.itechart.service;
 
-import org.itechart.entity.company.Company;
-import org.itechart.entity.company.CompanyType;
+import org.itechart.entity.jpa.company.Company;
+import org.itechart.entity.jpa.company.CompanyType;
 import org.itechart.other.PageableSortedById;
-import org.itechart.repository.*;
+import org.itechart.repository.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

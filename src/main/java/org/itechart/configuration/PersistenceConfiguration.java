@@ -1,11 +1,16 @@
 package org.itechart.configuration;
 
+import com.mongodb.MongoClient;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,7 +25,8 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("org.itechart.repository")
+@EnableJpaRepositories("org.itechart.repository.jpa")
+@EnableMongoRepositories("org.itechart.repository.mongo")
 public class PersistenceConfiguration {
     private static final Logger LOGGER = LogManager.getLogger(PersistenceConfiguration.class);
 
@@ -33,6 +39,16 @@ public class PersistenceConfiguration {
             LOGGER.log(Level.ERROR, e);
         }
         return null;
+    }
+
+    @Bean
+    public MongoTemplate mongoTemplate() throws Exception {
+        return new MongoTemplate(mongoDbFactory());
+    }
+
+    @Bean
+    public MongoDbFactory mongoDbFactory() throws Exception {
+        return new SimpleMongoDbFactory(new MongoClient(), "warehouse");
     }
 
     @Bean

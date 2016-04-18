@@ -1,8 +1,8 @@
 package org.itechart.service;
 
-import org.itechart.entity.Consignment;
+import org.itechart.entity.jpa.Consignment;
 import org.itechart.other.PageableSortedById;
-import org.itechart.repository.ConsignmentRepository;
+import org.itechart.repository.jpa.ConsignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

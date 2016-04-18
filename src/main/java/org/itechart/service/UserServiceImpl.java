@@ -1,9 +1,9 @@
 package org.itechart.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.itechart.entity.user.User;
+import org.itechart.entity.jpa.user.User;
 import org.itechart.other.PageableSortedById;
-import org.itechart.repository.UserRepository;
+import org.itechart.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

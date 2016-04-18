@@ -2,9 +2,9 @@ package org.itechart.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.itechart.entity.company.Company;
-import org.itechart.entity.company.CompanyType;
-import org.itechart.service.CompanyService;
+import org.itechart.entity.mongo.Company;
+import org.itechart.entity.jpa.company.CompanyType;
+import org.itechart.service.mongo.CompanyServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,30 +17,28 @@ public class CompanyController {
     private static final Logger LOGGER = LogManager.getLogger(CompanyController.class);
 
     @Autowired
-    private CompanyService companyService;
+    private CompanyServiceMongo companyServiceMongo;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<? extends Company> getCompanies(@RequestParam CompanyType companyType, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
-//        if (pageSize == 0) {
-//            return companyService.findAll(companyType);
-//        }
-        return companyService.findAll(companyType, page, pageSize);
+    public Page<Company> getCompanies(@RequestParam CompanyType companyType, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
+        return companyServiceMongo.findAll(companyType, page, pageSize);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Company getCompany(@PathVariable Long id) {
-        return companyService.findOne(id);
+    public Company getCompany(@PathVariable String id) {
+        return companyServiceMongo.findOne(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public void createCompany(@RequestBody Company company) {
-        companyService.save(company);
+        companyServiceMongo.save(company);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void updateUser(@RequestBody Company company) {
-        companyService.update(company);
+    public void updateCompany(@RequestBody Company company) {
+        companyServiceMongo.update(company);
     }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> errorHandler(Exception exc) {

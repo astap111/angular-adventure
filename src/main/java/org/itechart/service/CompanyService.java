@@ -1,7 +1,7 @@
 package org.itechart.service;
 
-import org.itechart.entity.company.Company;
-import org.itechart.entity.company.CompanyType;
+import org.itechart.entity.jpa.company.Company;
+import org.itechart.entity.jpa.company.CompanyType;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

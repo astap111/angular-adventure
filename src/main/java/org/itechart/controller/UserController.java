@@ -3,7 +3,7 @@ package org.itechart.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.itechart.configuration.security.SecurityUser;
-import org.itechart.entity.user.User;
+import org.itechart.entity.jpa.user.User;
 import org.itechart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

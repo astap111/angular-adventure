@@ -1,6 +1,6 @@
 package org.itechart.service;
 
-import org.itechart.entity.user.User;
+import org.itechart.entity.jpa.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 

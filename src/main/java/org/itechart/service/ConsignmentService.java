@@ -1,6 +1,6 @@
 package org.itechart.service;
 
-import org.itechart.entity.Consignment;
+import org.itechart.entity.jpa.Consignment;
 import org.springframework.data.domain.Page;
 
 public interface ConsignmentService {

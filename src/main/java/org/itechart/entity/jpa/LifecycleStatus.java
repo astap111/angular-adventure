@@ -1,0 +1,15 @@
+package org.itechart.entity.jpa;
+
+public enum LifecycleStatus {
+    REGISTERED,
+    ACCEPTED,
+    LOST_BY_CARRIER,
+    LOST_BY_WAREHOUSE,
+    STOLEN_FROM_WAREHOUSE,
+    CARRIER_SHORTFALL,
+    CONFISCATED,
+    UTILIZED,
+    REMOVED_FROM_STORAGE,
+    RELEASE_ALLOWED,
+    EXPORTED
+}

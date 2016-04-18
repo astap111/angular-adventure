@@ -2,7 +2,7 @@ package org.itechart.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.itechart.entity.Consignment;
+import org.itechart.entity.jpa.Consignment;
 import org.itechart.service.ConsignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

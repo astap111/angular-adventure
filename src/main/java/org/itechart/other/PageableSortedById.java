@@ -31,4 +31,31 @@ public class PageableSortedById implements Pageable {
     public Sort getSort() {
         return new Sort("id");
     }
+
+    @Override
+    public Pageable next() {
+        page++;
+        return this;
+    }
+
+    @Override
+    public Pageable previousOrFirst() {
+        if (page > 0) {
+            page--;
+        } else {
+            page = 0;
+        }
+        return this;
+    }
+
+    @Override
+    public Pageable first() {
+        page = 0;
+        return this;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return page < 1;
+    }
 }

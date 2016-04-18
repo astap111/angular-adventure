@@ -1,6 +1,6 @@
 package org.itechart.configuration.security;
 
-import org.itechart.entity.user.User;
+import org.itechart.entity.jpa.user.User;
 import org.itechart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

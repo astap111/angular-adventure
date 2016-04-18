@@ -1,7 +1,7 @@
 package org.itechart.configuration.security;
 
-import org.itechart.entity.user.Role;
-import org.itechart.entity.user.User;
+import org.itechart.entity.jpa.user.Role;
+import org.itechart.entity.jpa.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
