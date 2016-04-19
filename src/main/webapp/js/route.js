@@ -4,6 +4,12 @@ app.config(function ($stateProvider) {
             url: '/'
         })
 
+        .state('profitAndLoss', {
+            url: '/profitAndLoss',
+            templateUrl: 'partials/profitAndLoss.html',
+            controller: profitAndLossController
+        })
+
 
         // USERS
         .state('users', {
