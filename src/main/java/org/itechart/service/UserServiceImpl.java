@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void saveFile(MultipartFile file, User user) throws IOException {
-        if (!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             try (InputStream in = file.getInputStream()) {
                 Files.copy(in, new File("d:\\IdeaProjects\\angular-adventure\\src\\main\\webapp\\img\\user" + user.getId() + ".jpg").toPath(), StandardCopyOption.REPLACE_EXISTING);
             }

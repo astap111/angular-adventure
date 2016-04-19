@@ -25,7 +25,7 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Company getCompany(@PathVariable String id) {
+    public Company getCompany(@PathVariable Long id) {
         return companyServiceMongo.findOne(id);
     }
 

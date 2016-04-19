@@ -36,7 +36,7 @@ public class CompanyServiceMongoImpl implements CompanyServiceMongo {
     }
 
     @Override
-    public Company findOne(String id) {
+    public Company findOne(Long id) {
         return companyRepositoryMongo.findOne(id);
     }
 

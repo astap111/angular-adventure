@@ -32,7 +32,7 @@ var userDetailsController = function ($scope, $http, $stateParams, $state, FileU
         $http.get('api/users/' + $stateParams.userId)
             .then(function (response) {
                 $scope.user = response.data;
-                wrapUserDate($scope.user);
+                wrapEntityWithDates($scope.user, ["birthDate"]);
             });
     }
 

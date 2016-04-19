@@ -9,7 +9,7 @@ public interface CompanyServiceMongo {
 
     void save(Company company);
 
-    Company findOne(String id);
+    Company findOne(Long id);
 
     Page<Company> findAll(CompanyType companyType, int page, int pageSize);
 }

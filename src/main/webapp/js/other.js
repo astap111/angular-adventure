@@ -1,5 +1,8 @@
-function wrapUserDate(user) {
-    user.birthDate = new Date(user.birthDate);
+function wrapEntityWithDates(entity, fieldNames) {
+    for (var i = 0; i < fieldNames.length; i++) {
+        entity[fieldNames[i]] = new Date(entity[fieldNames[i]]);
+    }
+
 }
 
 function wrapConsignmentDate(consignment) {

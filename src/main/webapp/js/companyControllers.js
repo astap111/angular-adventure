@@ -30,6 +30,7 @@ var companyDetailsController = function ($scope, $http, $stateParams, $state) {
     $http.get('api/companies/' + $stateParams.companyId)
         .then(function (response) {
             $scope.company = response.data;
+            wrapEntityWithDates($scope.company, ["date"]);
         });
 
     $scope.onFormSubmit = function () {
