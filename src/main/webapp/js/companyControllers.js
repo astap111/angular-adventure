@@ -40,6 +40,13 @@ var companyDetailsController = function ($scope, $http, $stateParams, $state) {
         .then(function (response) {
             $scope.company = response.data;
             wrapEntityWithDates($scope.company, ["date"]);
+
+            var point = [{
+                name: $scope.company.name,
+                lat: $scope.company.latitude,
+                lon: $scope.company.longitude
+            }];
+            loadMap(point);
         });
 
     $scope.onFormSubmit = function () {
@@ -65,3 +72,49 @@ var addCompanyController = function ($scope, $http, $state, $stateParams) {
             );
     }
 };
+
+
+function loadMap(points) {
+    $(function () {
+
+        $('#container').highcharts('Map', {
+
+            title: {
+                text: 'Highmaps basic demo'
+            },
+
+            subtitle: {
+                text: 'Source map: <a href="https://code.highcharts.com/mapdata/countries/by/by-all.js">Belarus</a>'
+            },
+
+            mapNavigation: {
+                enabled: true
+            },
+
+            tooltip: {
+                headerFormat: '',
+                pointFormat: '<b>{point.name}</b><br>Lat: {point.lat}, Lon: {point.lon}'
+            },
+
+            series: [{
+                mapData: Highcharts.maps['countries/by/by-all'],
+                name: 'Warehouses',
+                borderColor: '#A0A0A0',
+                nullColor: 'rgba(200, 200, 200, 0.3)',
+                showInLegend: false
+            }, {
+                name: 'Separators',
+                type: 'mapline',
+                data: Highcharts.geojson(Highcharts.maps['countries/by/by-all'], 'mapline'),
+                color: '#707070',
+                showInLegend: false,
+                enableMouseTracking: false
+            }, {
+                type: 'mappoint',
+                name: 'Warehouses',
+                color: Highcharts.getOptions().colors[1],
+                data: points
+            }]
+        });
+    });
+}

@@ -16,61 +16,58 @@ var profitAndLossController = function ($scope, $http, $stateParams) {
 
 
         function initChart() {
-            $(function () {
-                $('#container').highcharts({
-                    chart: {
-                        type: 'line'
+            $('#container').highcharts({
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Profit & Loss Chart'
+                },
+                subtitle: {
+                    text: 'Your company'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: { // don't display the dummy year
+                        month: '%e. %b',
+                        year: '%b'
                     },
                     title: {
-                        text: 'Profit & Loss Chart'
+                        text: 'Date'
+                    }
+                },
+                yAxis: [{ //--- Primary yAxis
+                    title: {
+                        text: '$'
+                    }
+                }, { //--- Secondary yAxis
+                    title: {
+                        text: '$'
                     },
-                    subtitle: {
-                        text: 'Your company'
-                    },
-                    xAxis: {
-                        type: 'datetime',
-                        dateTimeLabelFormats: { // don't display the dummy year
-                            month: '%e. %b',
-                            year: '%b'
+                    opposite: true
+                }],
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
                         },
-                        title: {
-                            text: 'Date'
-                        }
-                    },
-                    yAxis: [{ //--- Primary yAxis
-                        title: {
-                            text: '$'
-                        }
-                    }, { //--- Secondary yAxis
-                        title: {
-                            text: '$'
-                        },
-                        opposite: true
-                    }],
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            },
-                            enableMouseTracking: true
-                        }
-                    },
-                    series: [{
-                        yAxis: 0,
-                        name: 'Profit',
-                        data: report.profits
-                    }, {
-                        yAxis: 1,
-                        name: 'Loss',
-                        data: report.losses
-                    }, {
-                        yAxis: 0,
-                        name: 'Total',
-                        data: report.totals
-                    }]
-                });
+                        enableMouseTracking: true
+                    }
+                },
+                series: [{
+                    yAxis: 0,
+                    name: 'Profit',
+                    data: report.profits
+                }, {
+                    yAxis: 1,
+                    name: 'Loss',
+                    data: report.losses
+                }, {
+                    yAxis: 0,
+                    name: 'Total',
+                    data: report.totals
+                }]
             });
         }
-
     });
 };
