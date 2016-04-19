@@ -19,8 +19,16 @@ var companiesController = function ($scope, $http, $stateParams) {
             $scope.pageCtx = response.data;
             $scope.companies = response.data.content;
             $scope.pager = {pages: []};
-            for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
-                $scope.pager.pages.push(i);
+            if ($scope.pageCtx.totalPages < 7) {
+                for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
+                    $scope.pager.pages.push(i);
+                }
+            } else {
+                var start = $scope.pageCtx.number > 2 ? $scope.pageCtx.number - 3 : 0;
+                var end = $scope.pageCtx.number < $scope.pageCtx.totalPages - 3 ? $scope.pageCtx.number + 3 : $scope.pageCtx.totalPages;
+                for (var i = start; i < end; i++) {
+                    $scope.pager.pages.push(i);
+                }
             }
         });
     }

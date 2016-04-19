@@ -20,8 +20,16 @@
         </tbody>
     </table>
 </div>
+
+
 <nav>
     <ul class="pagination">
+        <li class="enabled">
+            <a ui-sref="companies({page : 0, pageSize : pageCtx.size})" aria-label="First">
+                <span aria-hidden="true">&laquo;&laquo;</span>
+            </a>
+        </li>
+
         <li ng-show="pageCtx.number > 0" class="enabled">
             <a ui-sref="companies({page : pageCtx.number - 1, pageSize : pageCtx.size})" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
@@ -47,6 +55,11 @@
         <li ng-hide="pageCtx.number + 1 < pageCtx.totalPages" class="disabled">
             <a aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <li class="enabled">
+            <a ui-sref="companies({page : pageCtx.totalPages - 1, pageSize : pageCtx.size})" aria-label="Last">
+                <span aria-hidden="true">&raquo;&raquo;</span>
             </a>
         </li>
     </ul>
