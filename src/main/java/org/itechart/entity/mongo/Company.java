@@ -1,9 +1,21 @@
 package org.itechart.entity.mongo;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = CarrierCompany.class, name = "CARRIER_COMPANY"),
+        @JsonSubTypes.Type(value = org.itechart.entity.mongo.WarehouseCompany.class, name = "WAREHOUSE_COMPANY"),
+        @JsonSubTypes.Type(value = SenderCompany.class, name = "SENDER_COMPANY"),
+        @JsonSubTypes.Type(value = ReceiverCompany.class, name = "RECEIVER_COMPANY")
+})
 public class Company {
     @Id
     private Long id;
@@ -11,6 +23,8 @@ public class Company {
     private String name;
 
     private Date date;
+
+    private String _class;
 
     public Long getId() {
         return id;
@@ -34,5 +48,9 @@ public class Company {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String get_class() {
+        return _class;
     }
 }

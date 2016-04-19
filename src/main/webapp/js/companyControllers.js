@@ -3,6 +3,7 @@ var companiesController = function ($scope, $http, $stateParams) {
     self.page = parseInt($stateParams.page, 10);
     self.pageSize = parseInt($stateParams.pageSize, 10);
     self.companyType = $stateParams.companyType;
+    $scope.companyType = self.companyType;
 
     updatePage();
 
@@ -51,12 +52,15 @@ var companyDetailsController = function ($scope, $http, $stateParams, $state) {
     }
 };
 
-var addCompanyController = function ($scope, $http, $state) {
+var addCompanyController = function ($scope, $http, $state, $stateParams) {
+    $scope.companyType = $stateParams.companyType;
+
     $scope.onFormSubmit = function () {
+        $scope.company.type = $scope.companyType;
         $http.put('api/companies', $scope.company)
             .then(
                 function (response) {
-                    $state.go('companies');
+                    $state.go('companies', {companyType: $scope.companyType});
                 }
             );
     }

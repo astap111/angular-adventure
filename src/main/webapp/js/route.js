@@ -57,9 +57,12 @@ app.config(function ($stateProvider) {
         })
 
         .state('addCompany', {
-            url: '/companies/add',
+            url: '/companies/add?companyType',
             templateUrl: 'partials/companyDetails.html',
-            controller: addCompanyController
+            controller: addCompanyController,
+            params: {
+                companyType: ''
+            }
         })
 
 

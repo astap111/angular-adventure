@@ -1,4 +1,22 @@
-<h1 class="page-header">Companies</h1>
+<h1 class="page-header">
+    <span ng-switch on="companyType">
+        <span ng-switch-when="CARRIER_COMPANY">
+            Carrier Companies
+        </span>
+        <span ng-switch-when="WAREHOUSE_COMPANY">
+            Warehouse Company Details
+        </span>
+        <span ng-switch-when="SENDER_COMPANY">
+            Sender Company Details
+        </span>
+        <span ng-switch-when="RECEIVER_COMPANY">
+            Receiver Company Details
+        </span>
+        <span ng-switch-default>
+            Company Details
+        </span>
+    </span>
+</h1>
 
 <div class="table-responsive">
     <table class="table table-striped">
@@ -58,7 +76,7 @@
             </a>
         </li>
         <li class="enabled">
-            <a ui-sref="companies({page : pageCtx.totalPages - 1, pageSize : pageCtx.size})" aria-label="Last">
+            <a ui-sref="companies({page: pageCtx.totalPages - 1, pageSize: pageCtx.size})" aria-label="Last">
                 <span aria-hidden="true">&raquo;&raquo;</span>
             </a>
         </li>
@@ -73,6 +91,4 @@
         </li>
     </ul>
 </nav>
-
-
-<button ui-sref="addCompany" class="btn btn-default">Add company</button>
+<button ui-sref="addCompany({companyType: companyType})" class="btn btn-default">Add company</button>

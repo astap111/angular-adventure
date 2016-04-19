@@ -43,6 +43,6 @@ public class CompanyServiceMongoImpl implements CompanyServiceMongo {
     @Override
     public Page<Company> findAll(CompanyType companyType, int page, int pageSize) {
         Pageable pageable = new PageableSortedById(page, pageSize);
-        return companyRepositoryMongo.findAll(pageable);
+        return companyRepositoryMongo.findBy_class("org.itechart.entity.mongo.WarehouseCompany", pageable);
     }
 }

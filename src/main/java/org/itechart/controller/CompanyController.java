@@ -30,7 +30,7 @@ public class CompanyController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void createCompany(@RequestBody Company company) {
+    public void createWarehouse(@RequestBody Company company) {
         companyServiceMongo.save(company);
     }
 
