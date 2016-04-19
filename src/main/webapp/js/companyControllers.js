@@ -19,6 +19,17 @@ var companiesController = function ($scope, $http, $stateParams) {
         }).then(function (response) {
             $scope.pageCtx = response.data;
             $scope.companies = response.data.content;
+
+            var points = [];
+            for (var i = 0; i < $scope.companies.length; i++) {
+                points.push({
+                    name: $scope.companies[i].name,
+                    lat: $scope.companies[i].latitude,
+                    lon: $scope.companies[i].longitude
+                });
+            }
+            loadMap(points);
+
             $scope.pager = {pages: []};
             if ($scope.pageCtx.totalPages < 7) {
                 for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
