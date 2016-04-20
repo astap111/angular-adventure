@@ -1,7 +1,7 @@
 package org.itechart.controller;
 
-import org.itechart.entity.jpa.Consignment;
-import org.itechart.service.ConsignmentService;
+import org.itechart.entity.mongo.Consignment;
+import org.itechart.service.mongo.ConsignmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
