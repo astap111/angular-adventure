@@ -1,4 +1,4 @@
-var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload']);
+var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder']);
 
 app.run([
     '$rootScope', '$state', '$stateParams', '$http', 'authService',
@@ -22,7 +22,6 @@ app.run([
                     }
                 );
             });
-
     }
 ]);
 

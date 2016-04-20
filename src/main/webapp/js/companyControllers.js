@@ -77,12 +77,27 @@ var companyDetailsController = function ($scope, $http, $stateParams, $state) {
             $scope.company = response.data;
             wrapEntityWithDates($scope.company, ["date"]);
 
-            var point = [{
-                name: $scope.company.name,
-                lat: $scope.company.latitude,
-                lon: $scope.company.longitude
-            }];
-            loadMap(point);
+            function updateMap() {
+                var point = [{
+                    name: $scope.company.name,
+                    lat: $scope.company.latitude,
+                    lon: $scope.company.longitude
+                }];
+                loadMap(point);
+            }
+
+            updateMap();
+
+            $scope.$watch('out', function (newOut) {
+                if (newOut) {
+                    if (!$scope.company) {
+                        $scope.company = {};
+                    }
+                    $scope.company.latitude = newOut.geometry.location.lat();
+                    $scope.company.longitude = newOut.geometry.location.lng();
+                    updateMap();
+                }
+            });
         });
 
     $scope.onFormSubmit = function () {
@@ -97,6 +112,24 @@ var companyDetailsController = function ($scope, $http, $stateParams, $state) {
 
 var addCompanyController = function ($scope, $http, $state, $stateParams) {
     $scope.companyType = $stateParams.companyType;
+
+    $scope.my_place_id = "ChIJ02oeW9PP20YR2XC13VO4YQs";
+
+    $scope.$watch('out', function (newOut) {
+        if (newOut) {
+            if (!$scope.company) {
+                $scope.company = {};
+            }
+            $scope.company.latitude = newOut.geometry.location.lat();
+            $scope.company.longitude = newOut.geometry.location.lng();
+            var point = [{
+                name: $scope.company.name,
+                lat: $scope.company.latitude,
+                lon: $scope.company.longitude
+            }];
+            loadMap(point);
+        }
+    });
 
     $scope.onFormSubmit = function () {
         $scope.company.type = $scope.companyType;
@@ -116,7 +149,7 @@ function loadMap(points) {
         $('#container').highcharts('Map', {
 
             title: {
-                text: 'Highmaps basic demo'
+                text: 'Warehouses'
             },
 
             subtitle: {
