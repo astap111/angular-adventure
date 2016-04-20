@@ -1,9 +1,8 @@
 package org.itechart.configuration;
 
 import com.mongodb.MongoClient;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -28,7 +27,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("org.itechart.repository.jpa")
 @EnableMongoRepositories("org.itechart.repository.mongo")
 public class PersistenceConfiguration {
-    private static final Logger LOGGER = LogManager.getLogger(PersistenceConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceConfiguration.class);
 
     @Bean(destroyMethod = "")
     public DataSource dataSource() {
@@ -36,7 +35,7 @@ public class PersistenceConfiguration {
             Object ds = new InitialContext().lookup("java:/comp/env/jdbc/warehouse");
             return (DataSource) ds;
         } catch (NamingException e) {
-            LOGGER.log(Level.ERROR, e);
+            LOGGER.error("Datasource can not be loaded", e);
         }
         return null;
     }
@@ -46,7 +45,7 @@ public class PersistenceConfiguration {
         return new MongoTemplate(mongoDbFactory());
     }
 
-    @Bean
+    @Bean(destroyMethod = "destroy")
     public MongoDbFactory mongoDbFactory() throws Exception {
         return new SimpleMongoDbFactory(new MongoClient(), "warehouse");
     }
