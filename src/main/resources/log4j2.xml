@@ -6,10 +6,10 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="org.mongodb.driver" level="info">
+        <Logger name="org.springframework.data.mongodb.repository" level="DEBUG">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Root level="error">
+        <Root level="ERROR">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
