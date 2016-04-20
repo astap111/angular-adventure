@@ -1,7 +1,7 @@
 package org.itechart.service.mongo;
 
-import org.itechart.entity.jpa.company.CompanyType;
-import org.itechart.entity.mongo.Company;
+import org.itechart.entity.mongo.company.Company;
+import org.itechart.entity.mongo.company.CompanyType;
 import org.itechart.other.PageableSortedById;
 import org.itechart.repository.mongo.CompanyRepositoryMongo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +43,6 @@ public class CompanyServiceMongoImpl implements CompanyServiceMongo {
     @Override
     public Page<Company> findAll(CompanyType companyType, int page, int pageSize) {
         Pageable pageable = new PageableSortedById(page, pageSize);
-        return companyRepositoryMongo.findBy_class("org.itechart.entity.mongo.WarehouseCompany", pageable);
+        return companyRepositoryMongo.findBy_class("org.itechart.entity.mongo.company.WarehouseCompany", pageable);
     }
 }

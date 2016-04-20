@@ -1,4 +1,4 @@
-package org.itechart.entity.mongo;
+package org.itechart.entity.mongo.company;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -12,7 +12,7 @@ import java.util.Date;
         property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = CarrierCompany.class, name = "CARRIER_COMPANY"),
-        @JsonSubTypes.Type(value = org.itechart.entity.mongo.WarehouseCompany.class, name = "WAREHOUSE_COMPANY"),
+        @JsonSubTypes.Type(value = WarehouseCompany.class, name = "WAREHOUSE_COMPANY"),
         @JsonSubTypes.Type(value = SenderCompany.class, name = "SENDER_COMPANY"),
         @JsonSubTypes.Type(value = ReceiverCompany.class, name = "RECEIVER_COMPANY")
 })

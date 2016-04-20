@@ -2,7 +2,6 @@ package org.itechart.entity.jpa;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.itechart.entity.jpa.company.WarehouseCompany;
 import org.itechart.entity.jpa.user.User;
 
 import javax.persistence.*;
@@ -18,18 +17,6 @@ public class Consignment {
     private Long id;
 
     private String number;
-
-    @ManyToOne
-    @JoinColumn(name = "SENDER_ID")
-    private WarehouseCompany sender;
-
-    @ManyToOne
-    @JoinColumn(name = "RECEIVER_ID")
-    private WarehouseCompany receiver;
-
-    @ManyToOne
-    @JoinColumn(name = "CARRIER_ID")
-    private WarehouseCompany carrier;
 
     @OneToMany(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -67,30 +54,6 @@ public class Consignment {
 
     public void setNumber(String number) {
         this.number = number;
-    }
-
-    public WarehouseCompany getSender() {
-        return sender;
-    }
-
-    public void setSender(WarehouseCompany sender) {
-        this.sender = sender;
-    }
-
-    public WarehouseCompany getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(WarehouseCompany receiver) {
-        this.receiver = receiver;
-    }
-
-    public WarehouseCompany getCarrier() {
-        return carrier;
-    }
-
-    public void setCarrier(WarehouseCompany carrier) {
-        this.carrier = carrier;
     }
 
     public List<Product> getProducts() {

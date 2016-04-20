@@ -1,8 +1,8 @@
 package org.itechart.controller;
 
 
-import org.itechart.entity.jpa.company.CompanyType;
-import org.itechart.entity.mongo.Company;
+import org.itechart.entity.mongo.company.Company;
+import org.itechart.entity.mongo.company.CompanyType;
 import org.itechart.service.mongo.CompanyServiceMongo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

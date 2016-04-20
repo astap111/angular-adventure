@@ -1,7 +1,5 @@
 package org.itechart.entity.jpa.user;
 
-import org.itechart.entity.jpa.company.Company;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,10 +31,6 @@ public class User {
 
     @Transient
     private Object photo;
-
-    @ManyToOne
-    @JoinColumn(name = "COMPANY_ID")
-    private Company company;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
@@ -137,14 +131,6 @@ public class User {
 
     public void setStatus(UserStatus status) {
         this.status = status;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 
     public Object getPhoto() {

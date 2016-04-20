@@ -2,7 +2,6 @@ package org.itechart.entity.jpa;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.itechart.entity.jpa.company.Company;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,10 +13,6 @@ public class Warehouse {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "warehouse_id_seq")
     @SequenceGenerator(name = "warehouse_id_seq", sequenceName = "warehouse_id_seq")
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "COMPANY_ID")
-    private Company company;
 
     @Enumerated(EnumType.STRING)
     private StorageType storageType;
@@ -33,14 +28,6 @@ public class Warehouse {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 
     public StorageType getStorageType() {

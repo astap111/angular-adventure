@@ -1,4 +1,4 @@
-package org.itechart.entity.mongo;
+package org.itechart.entity.mongo.company;
 
 public class WarehouseCompany extends Company {
     private Double latitude;
