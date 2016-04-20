@@ -28,10 +28,12 @@
         </thead>
         <tbody>
         <tr ng-repeat="company in companies">
-            <td>
+            <td ng-show="lazy || ($index >= pageCtx.number * pageCtx.numberOfElements && $index < (pageCtx.number + 1) * pageCtx.numberOfElements)"
+                class="col-md-3">
                 {{ company.id }}
             </td>
-            <td>
+            <td ng-show="lazy || ($index >= pageCtx.number * pageCtx.numberOfElements && $index < (pageCtx.number + 1) * pageCtx.numberOfElements)"
+                class="col-md-9">
                 <a ui-sref="companyDetails({companyId: company.id})">{{ company.name }}</a>
             </td>
         </tr>
@@ -40,7 +42,7 @@
 </div>
 
 
-<nav>
+<nav ng-show="lazy">
     <ul class="pagination">
         <li class="enabled">
             <a ui-sref="companies({page : 0, pageSize : pageCtx.size})" aria-label="First">
@@ -91,6 +93,18 @@
         </li>
     </ul>
 </nav>
+
+<nav ng-hide="lazy">
+    <ul class="pagination">
+        <li class="{{ $index ==  pageCtx.number ? 'active' : '' }}"
+            ng-repeat="x in [].constructor(pageCtx.totalPages) track by $index">
+            <a ng-click="pageCtx.number = $index">
+                {{ $index + 1 }}
+            </a>
+        </li>
+    </ul>
+</nav>
+
 
 <div id="container"></div>
 

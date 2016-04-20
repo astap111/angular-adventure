@@ -1,7 +1,7 @@
 package org.itechart.service.mongo;
 
-import org.itechart.entity.mongo.Company;
 import org.itechart.entity.jpa.company.CompanyType;
+import org.itechart.entity.mongo.Company;
 import org.springframework.data.domain.Page;
 
 public interface CompanyServiceMongo {

@@ -1,8 +1,18 @@
 var companiesController = function ($scope, $http, $stateParams) {
     var self = this;
-    self.page = parseInt($stateParams.page, 10);
-    self.pageSize = parseInt($stateParams.pageSize, 10);
     self.companyType = $stateParams.companyType;
+
+    //LAZY LOADING OR NOT
+    if (companyType = 'WAREHOUSE_COMPANY') {
+        self.lazy = false;
+        self.page = 0;
+        self.pageSize = 0;
+    } else {
+        self.lazy = true;
+        self.page = parseInt($stateParams.page, 10);
+        self.pageSize = parseInt($stateParams.pageSize, 10);
+    }
+
     $scope.companyType = self.companyType;
 
     updatePage();
@@ -30,16 +40,31 @@ var companiesController = function ($scope, $http, $stateParams) {
             }
             loadMap(points);
 
-            $scope.pager = {pages: []};
-            if ($scope.pageCtx.totalPages < 7) {
-                for (var i = 0; i < $scope.pageCtx.totalPages; i++) {
-                    $scope.pager.pages.push(i);
+            if (self.lazy) {
+                $scope.pager = {pages: []};
+                if ($scope.pageCtx.totalPages < 7) {
+                    for (i = 0; i < $scope.pageCtx.totalPages; i++) {
+                        $scope.pager.pages.push(i);
+                    }
+                } else {
+                    var start = $scope.pageCtx.number > 2 ? $scope.pageCtx.number - 3 : 0;
+                    var end = $scope.pageCtx.number < $scope.pageCtx.totalPages - 3 ? $scope.pageCtx.number + 3 : $scope.pageCtx.totalPages;
+                    for (i = start; i < end; i++) {
+                        $scope.pager.pages.push(i);
+                    }
                 }
             } else {
-                var start = $scope.pageCtx.number > 2 ? $scope.pageCtx.number - 3 : 0;
-                var end = $scope.pageCtx.number < $scope.pageCtx.totalPages - 3 ? $scope.pageCtx.number + 3 : $scope.pageCtx.totalPages;
-                for (var i = start; i < end; i++) {
-                    $scope.pager.pages.push(i);
+                $scope.pageCtx.number = 0;
+                $scope.pageCtx.numberOfElements = 5;
+                $scope.pageCtx.totalPages = Math.ceil($scope.pageCtx.totalElements / $scope.pageCtx.numberOfElements);
+
+                $scope.pager = {pages: []};
+                if ($scope.pageCtx.totalPages < 7) {
+                    var start = $scope.pageCtx.number > 2 ? $scope.pageCtx.number - 3 : 0;
+                    var end = $scope.pageCtx.number < $scope.pageCtx.totalPages - 3 ? $scope.pageCtx.number + 3 : $scope.pageCtx.totalPages;
+                    for (i = start; i < end; i++) {
+                        $scope.pager.pages.push(i);
+                    }
                 }
             }
         });
