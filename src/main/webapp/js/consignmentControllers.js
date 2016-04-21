@@ -41,13 +41,17 @@ var consignmentDetailsController = function ($scope, $http, $stateParams, $state
 
 
 var addConsignmentController = function ($scope, $http, $state) {
-    $scope.senderCompanies = $http({
+    $http({
         url: 'api/companies',
-        params: {companyType: 'SENDER_COMPANY'},
+        params: {
+            companyType: 'SENDER_COMPANY',
+            page: 0,
+            pageSize: 0
+        },
         method: 'GET'
     }).then(function (response) {
-        $scope.pageCtx = response.data;
-        $scope.companies = response.data.content;
+        // $scope.pageCtx = response.data;
+        $scope.senderCompanies = response.data.content;
     });
 
     $scope.onFormSubmit = function () {
