@@ -3,6 +3,7 @@ package org.itechart.entity.mongo.company;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import java.util.Date;
         @JsonSubTypes.Type(value = SenderCompany.class, name = "SENDER_COMPANY"),
         @JsonSubTypes.Type(value = ReceiverCompany.class, name = "RECEIVER_COMPANY")
 })
+@Document
 public class Company {
     @Id
     private Long id;
