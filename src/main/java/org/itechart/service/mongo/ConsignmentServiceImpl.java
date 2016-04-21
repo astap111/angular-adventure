@@ -15,6 +15,9 @@ public class ConsignmentServiceImpl implements ConsignmentService {
     @Autowired
     private ConsignmentRepository consignmentRepository;
 
+    @Autowired
+    private CounterService counterService;
+
     @Override
     public void update(Consignment consignment) {
         if (consignment.getId() == null) {
@@ -28,6 +31,7 @@ public class ConsignmentServiceImpl implements ConsignmentService {
         if (consignment.getId() != null) {
             throw new IllegalArgumentException("Failed to save consignment with not null id");
         }
+        consignment.setId(counterService.getNextSequence(Consignment.class.getSimpleName()));
         consignmentRepository.save(consignment);
     }
 
