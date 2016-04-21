@@ -41,6 +41,12 @@ var consignmentDetailsController = function ($scope, $http, $stateParams, $state
 
 
 var addConsignmentController = function ($scope, $http, $state) {
+    $scope.senders = [];
+
+    $scope.$watch('senderInput', function(newValue, oldValue) {
+        console.log(newValue);
+    });
+
     $scope.senderCompanies = $http({
         url: 'api/companies',
         params: {companyType: 'SENDER_COMPANY'},

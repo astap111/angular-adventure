@@ -23,10 +23,13 @@
         </div>
 
         <div class="form-group">
-            <label for="sender" class="col-sm-2 control-label">Sender:</label>
+            <label for="senderInput" class="col-sm-2 control-label">Sender:</label>
             <div class="col-sm-6">
-                <select id="sender" ng-model="consignment.sender" class="form-control selectpicker"
-                        ng-options="senderCompany.name for senderCompany in senderCompanies track by senderCompany.id"></select>
+                    <input id="senderInput" list="somethingelse" class="form-control" ng-model="senderInput" ng-model-options="{debounce: 1000}">
+                    <datalist id="somethingelse">
+                        <option ng-repeat="sender in senders">{{ sender.name }}</option>
+                    </datalist>
+                </label>
             </div>
         </div>
 

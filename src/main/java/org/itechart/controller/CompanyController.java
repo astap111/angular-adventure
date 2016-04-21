@@ -21,10 +21,8 @@ public class CompanyController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Page<? extends Company> getCompanies(@RequestParam CompanyType companyType, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer pageSize) {
-//        if (pageSize == 0) {
-//            return companyService.findAll(companyType);
-//        }
-        return companyService.findAll(companyType, page, pageSize);
+
+        return companyService.findAll(companyType, page == null ? 0 : page, pageSize== null ? 0 :pageSize);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
