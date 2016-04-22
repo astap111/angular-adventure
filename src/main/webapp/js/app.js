@@ -1,10 +1,12 @@
-var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder', 'elasticsearch']);
+var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder', 'elasticsearch', 'acute.select']);
 
 app.run([
-    '$rootScope', '$state', '$stateParams', '$http', 'authService',
-    function ($rootScope, $state, $stateParams, $http, authService) {
+    '$rootScope', '$state', '$stateParams', '$http', 'authService', 'acuteSelectService',
+    function ($rootScope, $state, $stateParams, $http, authService, acuteSelectService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+
+        acuteSelectService.updateSetting("templatePath", "/acute.select");
 
         $rootScope.user = $http
             .get('api/users/currentUser')

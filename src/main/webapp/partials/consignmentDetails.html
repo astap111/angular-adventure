@@ -23,14 +23,16 @@
         </div>
 
         <div class="form-group">
-            <label for="senderInput" class="col-sm-2 control-label">Sender:</label>
+            <label class="col-sm-2 control-label">Sender:</label>
             <div class="col-sm-6">
-                <input id="senderInput" list="senderslist" class="form-control" ng-model="consignment.senderCompany.name"
-                       ng-model-options="{debounce: 500}">
-                <datalist id="senderslist">
-                    <option ng-repeat="sender in senders">{{ sender.name }}</option>
-                </datalist>
-                </label>
+                <!--<input id="senderInput" list="senderslist" class="form-control" ng-model="consignment.senderCompany.name"-->
+                <!--ng-model-options="{debounce: 500}">-->
+                <!--<datalist id="senderslist">-->
+                <!--<option ng-repeat="sender in senders">{{ sender.name }}</option>-->
+                <!--</datalist>-->
+                <ac-select ac-model='consignment.senderCompany' ac-options='sender.name for sender in loadSenders()'
+                           ac-change='selectionChanged(value)' ac-settings='{ "minWidth": "500px", "pageSize": 10, "itemsInView": 5,"loadOnOpen": true }' ac-key="id">
+                </ac-select>
             </div>
         </div>
 

@@ -43,29 +43,26 @@ var consignmentDetailsController = function ($scope, $http, $stateParams, $state
 var addConsignmentController = function ($scope, $http, $state, client) {
     $scope.consignment = {senderCompany: {name: ""}};
 
-    $scope.$watch('consignment.senderCompany.name', function (newValue, oldValue) {
-        if (newValue) {
-            //check if newValue is exact name of a sender
-            if (oldValue && newValue.indexOf(oldValue) > -1) {
-                $scope.senders.forEach(function (sender) {
-                    if (sender.name === newValue) {
-                        chooseSender(sender.id);
-                        return;
-                    }
-                });
-            } else {
-                $scope.senders = [];
+    $scope.selectionChanged = function (value) {
+        //console.log(arguments);
+        //console.log(value);
+    };
 
-                searchInElastic(newValue, function (response) {
-                    response.hits.hits.forEach(function (hit) {
-                        $scope.senders.push(hit._source)
-                    })
-                });
-            }
-        } else {
-            $scope.senders = [];
-        }
-    });
+    $scope.loadSenders = function (callback, searchString, searchFrom) {
+        console.log(arguments);
+        $scope.senders = [];
+        searchInElastic(searchString, searchFrom, function (response) {
+            itemsProcessed = 0;
+            response.hits.hits.forEach(function (item, index, array) {
+                $scope.senders.push(item._source);
+                itemsProcessed++;
+                if(itemsProcessed === array.length) {
+                    //console.log(callback);
+                    callback($scope.senders, response.hits.total);
+                }
+            });
+        });
+    };
 
     function chooseSender(id) {
         $http({
@@ -76,11 +73,12 @@ var addConsignmentController = function ($scope, $http, $state, client) {
         });
     }
 
-    function searchInElastic(name, callback) {
+    function searchInElastic(searchString, searchFrom, callback) {
         client.search({
             index: 'warehouse',
             type: 'SENDER_COMPANY',
-            q: "name:" + name + "*"
+            q: "name:" + searchString + "*",
+            from: (searchFrom)
         }, function (error, response) {
             callback(response);
         });
