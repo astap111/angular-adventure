@@ -40,21 +40,49 @@ var consignmentDetailsController = function ($scope, $http, $stateParams, $state
 };
 
 
-var addConsignmentController = function ($scope, $http, $state) {
-    updatePage();
-    
-    function updatePage() {
+var addConsignmentController = function ($scope, $http, $state, client) {
+    $scope.consignment = {senderCompany: {name: ""}};
+
+    $scope.$watch('consignment.senderCompany.name', function (newValue, oldValue) {
+        if (newValue) {
+            //check if newValue is exact name of a sender
+            if (oldValue && newValue.indexOf(oldValue) > -1) {
+                $scope.senders.forEach(function (sender) {
+                    if (sender.name === newValue) {
+                        chooseSender(sender.id);
+                        return;
+                    }
+                });
+            } else {
+                $scope.senders = [];
+
+                searchInElastic(newValue, function (response) {
+                    response.hits.hits.forEach(function (hit) {
+                        $scope.senders.push(hit._source)
+                    })
+                });
+            }
+        } else {
+            $scope.senders = [];
+        }
+    });
+
+    function chooseSender(id) {
         $http({
-            url: 'api/companies',
-            params: {
-                companyType: 'SENDER_COMPANY',
-                page: 0,
-                pageSize: 0
-            },
+            url: 'api/companies/' + id,
             method: 'GET'
         }).then(function (response) {
-            // $scope.pageCtx = response.data;
-            $scope.senderCompanies = response.data.content;
+            $scope.consignment.senderCompany = response.data;
+        });
+    }
+
+    function searchInElastic(name, callback) {
+        client.search({
+            index: 'warehouse',
+            type: 'SENDER_COMPANY',
+            q: "name:" + name + "*"
+        }, function (error, response) {
+            callback(response);
         });
     }
 

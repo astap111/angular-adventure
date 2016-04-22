@@ -1,4 +1,4 @@
-var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder']);
+var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder', 'elasticsearch']);
 
 app.run([
     '$rootScope', '$state', '$stateParams', '$http', 'authService',
@@ -54,4 +54,10 @@ app.service('authService', function ($rootScope) {
         }
         return permitAccess;
     }
+});
+
+app.service('client', function (esFactory) {
+    return esFactory({
+        host: 'localhost:9200'
+    });
 });

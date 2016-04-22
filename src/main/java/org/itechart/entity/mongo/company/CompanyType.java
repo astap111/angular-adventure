@@ -16,4 +16,17 @@ public enum CompanyType {
         }
         return null;
     }
+
+    public static CompanyType getTypeByClass(Class clazz) {
+        if (clazz.equals(CarrierCompany.class)) {
+            return CARRIER_COMPANY;
+        } else if (clazz.equals(WarehouseCompany.class)) {
+            return WAREHOUSE_COMPANY;
+        } else if (clazz.equals(SenderCompany.class)) {
+            return SENDER_COMPANY;
+        } else if (clazz.equals(ReceiverCompany.class)) {
+            return RECEIVER_COMPANY;
+        }
+        return null;
+    }
 }
