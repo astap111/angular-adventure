@@ -1,3 +1,9 @@
 .validation-form input.ng-invalid.ng-touched {
     background-color: #FA787E;
 }
+
+div.ac-select-main, div.ac-select-main-closed {
+    height:34px;
+    padding: 6px 12px;
+    font-size: 14px;
+}

@@ -24,13 +24,13 @@ var consignmentsController = function ($scope, $http, $stateParams) {
 var consignmentDetailsController = function ($scope, $http, $stateParams, $state, client) {
     updatePage();
     $scope.senders = [];
+    $scope.onStartup = true;
 
     function updatePage() {
         $http.get('api/consignments/' + $stateParams.consignmentId)
             .then(function (response) {
                 $scope.consignment = response.data;
                 wrapConsignmentDate($scope.consignment);
-
                 $scope.senders.push($scope.consignment.senderCompany);
             });
     }
