@@ -1,4 +1,4 @@
-var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder', 'elasticsearch', 'acute.select']);
+var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder', 'elasticsearch', 'acute.select', 'ngWebsocket']);
 
 app.run([
     '$rootScope', '$state', '$stateParams', '$http', 'authService', 'acuteSelectService',
@@ -28,7 +28,7 @@ app.run([
 ]);
 
 app.service('authService', function ($rootScope) {
-    this.checkAccess = function (event, toState, toParams, fromState, fromParams) {
+    this.checkAccess = function (event, toState) {
         if (toState.data && toState.data.permitTo) {
             var permitTo = toState.data.permitTo;
             var currentRoles = $rootScope.loggedUserRoles;

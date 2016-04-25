@@ -9,7 +9,7 @@
         <Logger name="org.springframework.data.mongodb.repository" level="DEBUG">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Root level="ERROR">
+        <Root level="DEBUG">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
