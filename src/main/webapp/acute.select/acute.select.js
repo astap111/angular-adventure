@@ -123,7 +123,7 @@ angular.module("acute.select", [])
                             $scope.selectedItem = item;
                             $scope.confirmedItem = angular.copy($scope.selectedItem);
                         }
-                        if (item.text.length > $scope.longestText.length) {
+                        if (item.text && item.text.length > $scope.longestText.length) {
                             $scope.longestText = item.text;
                         }
                     });
@@ -642,7 +642,7 @@ angular.module("acute.select", [])
 })
 
 // Call a function when the element is scrolled
-// E.g. ac-on-scroll="listScrolled()" 
+// E.g. ac-on-scroll="listScrolled()"
 // N.B. take care not to use the result to directly update an acScrollTo expression
 // as this will result in an infinite recursion!
 .directive('acOnScroll', function () {

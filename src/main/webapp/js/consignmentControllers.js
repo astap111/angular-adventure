@@ -21,30 +21,27 @@ var consignmentsController = function ($scope, $http, $stateParams) {
     }
 };
 
-var consignmentDetailsController = function ($scope, $http, $stateParams, $state) {
+var consignmentDetailsController = function ($scope, $http, $stateParams, $state, client) {
+    updatePage();
+    $scope.senders = [];
 
-    $http.get('api/consignments/' + $stateParams.consignmentId)
-        .then(function (response) {
-            $scope.consignment = response.data;
-            wrapConsignmentDate($scope.consignment);
-        });
+    function updatePage() {
+        $http.get('api/consignments/' + $stateParams.consignmentId)
+            .then(function (response) {
+                $scope.consignment = response.data;
+                wrapConsignmentDate($scope.consignment);
 
-    $scope.onFormSubmit = function () {
-        $http.post('api/consignments', $scope.consignment)
-            .then(
-                function (response) {
-                    $state.go('consignments');
-                }
-            );
+                $scope.senders.push($scope.consignment.senderCompany);
+            });
     }
-};
-
-
-var addConsignmentController = function ($scope, $http, $state, client) {
-    $scope.consignment = {senderCompany: {name: ""}};
 
     $scope.selectionChanged = function (value) {
-        chooseSender(value.id);
+        $http({
+            url: 'api/companies/' + value.id,
+            method: 'GET'
+        }).then(function (response) {
+            $scope.consignment.senderCompany = response.data;
+        });
     };
 
     $scope.loadSenders = function (callback, searchString, searchFrom) {
@@ -61,14 +58,53 @@ var addConsignmentController = function ($scope, $http, $state, client) {
         });
     };
 
-    function chooseSender(id) {
+    function searchInElastic(searchString, searchFrom, callback) {
+        client.search({
+            index: 'warehouse',
+            type: 'SENDER_COMPANY',
+            q: "name:*" + searchString + "*",
+            from: (searchFrom)
+        }, function (error, response) {
+            callback(response);
+        });
+    }
+
+    $scope.onFormSubmit = function () {
+        $http.post('api/consignments', $scope.consignment)
+            .then(
+                function (response) {
+                    $state.go('consignments');
+                }
+            );
+    }
+};
+
+
+var addConsignmentController = function ($scope, $http, $state, client) {
+    $scope.consignment = {senderCompany: {name: ""}};
+
+    $scope.selectionChanged = function (value) {
         $http({
-            url: 'api/companies/' + id,
+            url: 'api/companies/' + value.id,
             method: 'GET'
         }).then(function (response) {
             $scope.consignment.senderCompany = response.data;
         });
-    }
+    };
+
+    $scope.loadSenders = function (callback, searchString, searchFrom) {
+        $scope.senders = [];
+        searchInElastic(searchString, searchFrom, function (response) {
+            itemsProcessed = 0;
+            response.hits.hits.forEach(function (item, index, array) {
+                $scope.senders.push(item._source);
+                itemsProcessed++;
+                if (itemsProcessed === array.length) {
+                    callback($scope.senders, response.hits.total);
+                }
+            });
+        });
+    };
 
     function searchInElastic(searchString, searchFrom, callback) {
         client.search({
