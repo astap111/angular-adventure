@@ -44,20 +44,17 @@ var addConsignmentController = function ($scope, $http, $state, client) {
     $scope.consignment = {senderCompany: {name: ""}};
 
     $scope.selectionChanged = function (value) {
-        //console.log(arguments);
-        //console.log(value);
+        chooseSender(value.id);
     };
 
     $scope.loadSenders = function (callback, searchString, searchFrom) {
-        console.log(arguments);
         $scope.senders = [];
         searchInElastic(searchString, searchFrom, function (response) {
             itemsProcessed = 0;
             response.hits.hits.forEach(function (item, index, array) {
                 $scope.senders.push(item._source);
                 itemsProcessed++;
-                if(itemsProcessed === array.length) {
-                    //console.log(callback);
+                if (itemsProcessed === array.length) {
                     callback($scope.senders, response.hits.total);
                 }
             });
@@ -77,7 +74,7 @@ var addConsignmentController = function ($scope, $http, $state, client) {
         client.search({
             index: 'warehouse',
             type: 'SENDER_COMPANY',
-            q: "name:" + searchString + "*",
+            q: "name:*" + searchString + "*",
             from: (searchFrom)
         }, function (error, response) {
             callback(response);
