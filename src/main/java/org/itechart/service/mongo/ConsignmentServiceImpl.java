@@ -20,11 +20,15 @@ public class ConsignmentServiceImpl implements ConsignmentService {
     @Autowired
     private StompService stompService;
 
+    @Autowired
+    private ProductServiceImpl productService;
+
     @Override
     public void update(Consignment consignment) {
         if (consignment.getId() == null) {
             throw new IllegalArgumentException("Failed to update consignment with id == null");
         }
+        productService.saveProducts(consignment.getProducts());
         consignmentRepository.save(consignment);
     }
 
@@ -33,9 +37,12 @@ public class ConsignmentServiceImpl implements ConsignmentService {
         if (consignment.getId() != null) {
             throw new IllegalArgumentException("Failed to save consignment with not null id");
         }
+        productService.saveProducts(consignment.getProducts());
         consignment.setId(counterService.getNextSequence(Consignment.class.getSimpleName()));
         consignmentRepository.save(consignment);
-        stompService.sendNotification("/topic/dispatcher", consignment);
+        if (consignment.getStatus() == LifecycleStatus.REGISTERED) {
+            stompService.sendNotification("/topic/dispatcher", consignment);
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Date;
+import java.util.List;
 
 @Document
 public class Consignment {
@@ -25,6 +26,9 @@ public class Consignment {
 
     @DBRef
     private WarehouseCompany warehouseCompany;
+
+    @DBRef
+    private List<Product> products;
 
     @Enumerated(EnumType.STRING)
     private LifecycleStatus status;
@@ -75,5 +79,13 @@ public class Consignment {
 
     public void setStatus(LifecycleStatus status) {
         this.status = status;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

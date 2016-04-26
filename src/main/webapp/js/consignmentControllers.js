@@ -69,6 +69,14 @@ var consignmentDetailsController = function ($scope, $http, $stateParams, $state
         });
     }
 
+    $scope.addProduct = function () {
+        $scope.consignment.products.push({});
+    };
+
+    $scope.removeProduct = function (index) {
+        $scope.consignment.products.splice(index, 1);
+    };
+
     $scope.onFormSubmit = function () {
         $http.post('api/consignments', $scope.consignment)
             .then(
@@ -81,7 +89,7 @@ var consignmentDetailsController = function ($scope, $http, $stateParams, $state
 
 
 var addConsignmentController = function ($scope, $http, $state, client) {
-    $scope.consignment = {senderCompany: {name: '', status: 'REGISTERED'}};
+    $scope.consignment = {senderCompany: {name: '', status: 'REGISTERED'}, products: [{}]};
 
     $scope.selectionChanged = function (value) {
         $http({
