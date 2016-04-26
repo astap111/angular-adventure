@@ -1,22 +1,24 @@
 package org.itechart.service.mongo;
 
+import org.itechart.entity.jpa.LifecycleStatus;
 import org.itechart.entity.mongo.Consignment;
 import org.itechart.other.PageableSortedById;
 import org.itechart.repository.mongo.ConsignmentRepository;
+import org.itechart.service.StompService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class ConsignmentServiceImpl implements ConsignmentService {
-
     @Autowired
     private ConsignmentRepository consignmentRepository;
 
     @Autowired
     private CounterService counterService;
+
+    @Autowired
+    private StompService stompService;
 
     @Override
     public void update(Consignment consignment) {
@@ -33,6 +35,7 @@ public class ConsignmentServiceImpl implements ConsignmentService {
         }
         consignment.setId(counterService.getNextSequence(Consignment.class.getSimpleName()));
         consignmentRepository.save(consignment);
+        stompService.sendNotification("/topic/dispatcher", consignment);
     }
 
     @Override
@@ -43,5 +46,10 @@ public class ConsignmentServiceImpl implements ConsignmentService {
     @Override
     public Page<Consignment> findAll(int page, int pageSize) {
         return consignmentRepository.findAll(new PageableSortedById(page, pageSize));
+    }
+
+    @Override
+    public Page<Consignment> findAll(int page, int pageSize, LifecycleStatus status) {
+        return consignmentRepository.findAllByStatus(status, new PageableSortedById(page, pageSize));
     }
 }

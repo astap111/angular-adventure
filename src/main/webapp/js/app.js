@@ -1,8 +1,13 @@
-var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder', 'elasticsearch', 'acute.select', 'ngWebsocket']);
+var app = angular.module('warehouseApp', ['ui.router', 'angularFileUpload', 'angular-google-maps-geocoder', 'elasticsearch', 'acute.select', 'AngularStompDK']);
+
+app.config(function (ngstompProvider) {
+    ngstompProvider
+        .url('ws:/localhost:8080/stomp');
+});
 
 app.run([
-    '$rootScope', '$state', '$stateParams', '$http', 'authService', 'acuteSelectService',
-    function ($rootScope, $state, $stateParams, $http, authService, acuteSelectService) {
+    '$rootScope', '$state', '$stateParams', '$http', 'authService', 'acuteSelectService', 'ngstomp',
+    function ($rootScope, $state, $stateParams, $http, authService, acuteSelectService, ngstomp) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
@@ -12,11 +17,26 @@ app.run([
             .get('api/users/currentUser')
             .then(function (response) {
                 $rootScope.loggedUser = response.data;
-                $rootScope.loggedUserRoles = $rootScope.loggedUser.roles;
                 $rootScope.authService = authService;
+
+                // Subscribe to STOMP
+                if (authService.checkRights(['ROLE_DISPATCHER'])) {
+                    var whatToDoWhenMessageComming = function (message) {
+                        var alertConsignment = JSON.parse(message.body);
+                        $rootScope.alert = {
+                            href: "#/consignments/" + alertConsignment.id,
+                            message: "New consignment #" + alertConsignment.number + " registered"
+                        };
+                    };
+                    ngstomp
+                        .subscribeTo('/topic/dispatcher')
+                        .callback(whatToDoWhenMessageComming)
+                        .connect();
+                }
 
                 $rootScope.$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
+                        $rootScope.alert = null;
                         if (!authService.checkAccess(event, toState, toParams, fromState, fromParams)) {
                             event.preventDefault();
                             $state.go('home');
@@ -31,7 +51,7 @@ app.service('authService', function ($rootScope) {
     this.checkAccess = function (event, toState) {
         if (toState.data && toState.data.permitTo) {
             var permitTo = toState.data.permitTo;
-            var currentRoles = $rootScope.loggedUserRoles;
+            var currentRoles = $rootScope.loggedUser.roles;
 
             return _checkIntersection(currentRoles, permitTo);
         } else {
@@ -40,8 +60,8 @@ app.service('authService', function ($rootScope) {
     };
 
     this.checkRights = function (permitTo) {
-        var currentRoles = $rootScope.loggedUserRoles;
-        return _checkIntersection(currentRoles, permitTo);
+
+        return _checkIntersection($rootScope.loggedUser.roles, permitTo);
     };
 
     _checkIntersection = function (currentRoles, permitTo) {

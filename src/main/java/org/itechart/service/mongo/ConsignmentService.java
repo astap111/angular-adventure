@@ -1,5 +1,6 @@
 package org.itechart.service.mongo;
 
+import org.itechart.entity.jpa.LifecycleStatus;
 import org.itechart.entity.mongo.Consignment;
 import org.springframework.data.domain.Page;
 
@@ -11,4 +12,6 @@ public interface ConsignmentService {
     Consignment findOne(Long id);
 
     Page<Consignment> findAll(int page, int pageSize);
+
+    Page<Consignment> findAll(int page, int pageSize, LifecycleStatus status);
 }

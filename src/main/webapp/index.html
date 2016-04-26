@@ -49,8 +49,9 @@
     <!--Angular Elastic Search-->
     <script src="js/elasticsearch.angular.js"></script>
 
-    <!--Angular Websocket-->
-    <script src="js/ng-websocket.js"></script>
+    <!--Angular STOMP Websocket-->
+    <script src="js/stomp.js"></script>
+    <script src="js/angular-stomp.js"></script>
 
     <!--Dropdown textbox-->
     <script src="acute.select/acute.select.js"></script>
@@ -95,23 +96,35 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a ui-sref="users">Users</a></li>
                 <li ng-show="authService.checkRights(['ROLE_SYSTEM_ADMIN'])">
-                    <a ui-sref="companies({companyType:'WAREHOUSE_COMPANY'})">
-                        Warehouses
-                    </a>
+                    <a ui-sref="users">Users</a>
                 </li>
 
-                <li><a ui-sref="companies({companyType:'CARRIER_COMPANY'})">Carriers</a></li>
-                <li><a ui-sref="companies({companyType:'SENDER_COMPANY'})">Senders</a></li>
-                <li><a ui-sref="companies({companyType:'RECEIVER_COMPANY'})">Receivers</a></li>
+                <li ng-show="authService.checkRights(['ROLE_SYSTEM_ADMIN'])">
+                    <a ui-sref="companies({companyType:'WAREHOUSE_COMPANY'})"> Warehouses </a>
+                </li>
 
-                <li><a ui-sref="consignments">Consignments</a></li>
+                <li ng-show="authService.checkRights(['ROLE_SYSTEM_ADMIN'])">
+                    <a ui-sref="companies({companyType:'CARRIER_COMPANY'})">Carriers</a>
+                </li>
 
-                <li><a ui-sref="profitAndLoss">Profit & Loss</a></li>
+                <li ng-show="authService.checkRights(['ROLE_SYSTEM_ADMIN'])">
+                    <a ui-sref="companies({companyType:'RECEIVER_COMPANY'})">Receivers</a>
+                </li>
+
+                <li ng-show="authService.checkRights(['ROLE_SYSTEM_ADMIN', 'ROLE_DISPATCHER'])">
+                    <a ui-sref="consignments">Consignments</a>
+                </li>
+
+                <li ng-show="authService.checkRights(['ROLE_SYSTEM_ADMIN'])">
+                    <a ui-sref="profitAndLoss">Profit & Loss</a>
+                </li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="alert alert-warning" role="alert" ng-show="alert">
+                <a href="{{ alert.href }}">{{ alert.message }}</a>
+            </div>
             <div ui-view>
                 <h1 class="page-header">Welcome to Warehouse Control Application!</h1>
             </div>

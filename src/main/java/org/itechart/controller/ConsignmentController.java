@@ -1,5 +1,7 @@
 package org.itechart.controller;
 
+import org.itechart.entity.jpa.LifecycleStatus;
+import org.itechart.entity.jpa.user.UserRole;
 import org.itechart.entity.mongo.Consignment;
 import org.itechart.service.mongo.ConsignmentService;
 import org.slf4j.Logger;
@@ -8,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "api/consignments")
@@ -19,8 +25,15 @@ public class ConsignmentController {
     private ConsignmentService consignmentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Page<Consignment> getConsignments(@RequestParam int page, @RequestParam int pageSize) {
-        return consignmentService.findAll(page, pageSize);
+    @PreAuthorize("hasAnyRole('ROLE_SYSTEM_ADMIN', 'ROLE_DISPATCHER')")
+    public Page<Consignment> getConsignments(@RequestParam int page, @RequestParam int pageSize, HttpServletRequest request) {
+        if (request.isUserInRole(UserRole.ROLE_SYSTEM_ADMIN.name())) {
+            return consignmentService.findAll(page, pageSize);
+        } else if (request.isUserInRole(UserRole.ROLE_DISPATCHER.name())) {
+            return consignmentService.findAll(page, pageSize, LifecycleStatus.REGISTERED);
+        }
+        throw new AuthenticationException("Unauthorized Access") {
+        };
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
